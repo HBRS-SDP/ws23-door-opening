@@ -1,0 +1,5 @@
+/home/muni/Documents/sdp_ws/build/CMakeFiles/edit_cache.dir
+/home/muni/Documents/sdp_ws/build/CMakeFiles/rebuild_cache.dir
+/home/muni/Documents/sdp_ws/build/app/CMakeFiles/Executable.dir
+/home/muni/Documents/sdp_ws/build/app/CMakeFiles/edit_cache.dir
+/home/muni/Documents/sdp_ws/build/app/CMakeFiles/rebuild_cache.dir
