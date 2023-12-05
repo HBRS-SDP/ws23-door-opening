@@ -23,12 +23,12 @@
 - Build file 
    ```
    cd ~/door_opening/build
-   cmake ../src/
-   cmake --build
+   cmake ..
+   cmake --build .
    ```
 - Run
    ```
-   cd ~/door_opening/app/
-   ./filename
+   cd ~/door_opening/build/app/
+   ./Executable
    ```
      
