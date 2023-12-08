@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/muni/Documents/sdp_ws
+CMAKE_SOURCE_DIR = /home/muni/Documents/sdp_ws/ws23-door-opening
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/muni/Documents/sdp_ws/build
+CMAKE_BINARY_DIR = /home/muni/Documents/sdp_ws/ws23-door-opening/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/muni/Documents/sdp_ws/build/CMakeFiles /home/muni/Documents/sdp_ws/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/muni/Documents/sdp_ws/ws23-door-opening/build/CMakeFiles /home/muni/Documents/sdp_ws/ws23-door-opening/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/muni/Documents/sdp_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/muni/Documents/sdp_ws/ws23-door-opening/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -117,17 +117,65 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named Executable
+# Target rules for targets named src_main
 
 # Build rule for target.
-Executable: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Executable
-.PHONY : Executable
+src_main: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src_main
+.PHONY : src_main
 
 # fast build rule for target.
-Executable/fast:
-	$(MAKE) $(MAKESILENT) -f app/CMakeFiles/Executable.dir/build.make app/CMakeFiles/Executable.dir/build
-.PHONY : Executable/fast
+src_main/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/src_main.dir/build.make CMakeFiles/src_main.dir/build
+.PHONY : src_main/fast
+
+src/main.o: src/main.cpp.o
+.PHONY : src/main.o
+
+# target to build an object file
+src/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/src_main.dir/build.make CMakeFiles/src_main.dir/src/main.cpp.o
+.PHONY : src/main.cpp.o
+
+src/main.i: src/main.cpp.i
+.PHONY : src/main.i
+
+# target to preprocess a source file
+src/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/src_main.dir/build.make CMakeFiles/src_main.dir/src/main.cpp.i
+.PHONY : src/main.cpp.i
+
+src/main.s: src/main.cpp.s
+.PHONY : src/main.s
+
+# target to generate assembly for a file
+src/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/src_main.dir/build.make CMakeFiles/src_main.dir/src/main.cpp.s
+.PHONY : src/main.cpp.s
+
+src/utilities.o: src/utilities.cpp.o
+.PHONY : src/utilities.o
+
+# target to build an object file
+src/utilities.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/src_main.dir/build.make CMakeFiles/src_main.dir/src/utilities.cpp.o
+.PHONY : src/utilities.cpp.o
+
+src/utilities.i: src/utilities.cpp.i
+.PHONY : src/utilities.i
+
+# target to preprocess a source file
+src/utilities.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/src_main.dir/build.make CMakeFiles/src_main.dir/src/utilities.cpp.i
+.PHONY : src/utilities.cpp.i
+
+src/utilities.s: src/utilities.cpp.s
+.PHONY : src/utilities.s
+
+# target to generate assembly for a file
+src/utilities.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/src_main.dir/build.make CMakeFiles/src_main.dir/src/utilities.cpp.s
+.PHONY : src/utilities.cpp.s
 
 # Help Target
 help:
@@ -137,7 +185,13 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... Executable"
+	@echo "... src_main"
+	@echo "... src/main.o"
+	@echo "... src/main.i"
+	@echo "... src/main.s"
+	@echo "... src/utilities.o"
+	@echo "... src/utilities.i"
+	@echo "... src/utilities.s"
 .PHONY : help
 
 
