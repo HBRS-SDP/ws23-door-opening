@@ -1,14 +1,47 @@
-# Establish minimum required version, project details, directories and subdirectories
+cmake_minimum_required(VERSION 3.5)
+
+project(Door_Opening VERSION 1.0.0 LANGUAGES CXX)
+
+# Activate C++ 11
+set (CMAKE_CXX_STANDARD 11)
 
 
-cmake_minimum_required(VERSION 3.22)
+include_directories(${PROJECT_SOURCE_DIR}/thirdParty/cxxopts/)
 
-project(
-    DOOR_OPENING
-    VERSION 1.0.0
-    LANGUAGES C CXX)
+add_compile_options(-Wall)
+add_compile_options(-Wno-reorder)
 
-#set(EXECUTABLE_NAME Executable)
+add_definitions(-D_OS_UNIX)
 
 
-add_subdirectory(app)
+
+link_libraries(${PROJECT_SOURCE_DIR}/lib/release/libKortexApiCpp.a)
+
+# Add Include Directories
+include_directories(${PROJECT_SOURCE_DIR}include)
+include_directories(${PROJECT_SOURCE_DIR}include/client)
+include_directories(${PROJECT_SOURCE_DIR}include/common)
+include_directories(${PROJECT_SOURCE_DIR}include/messages)
+include_directories(${PROJECT_SOURCE_DIR}include/client_stubs)
+
+
+# link other libs
+
+link_libraries(pthread)
+
+
+# Create executable for each example
+# Look for examples under folders
+file(GLOB EXE_LIST RELATIVE ${PROJECT_SOURCE_DIR} "src/*.cpp")
+list(REMOVE_ITEM EXE_LIST "src/utilities.cpp")
+
+foreach ( SRC_FILE ${EXE_LIST} )
+
+  string(REPLACE ".cpp" "" TARGET_EXE_NAME ${SRC_FILE})
+  string(REPLACE "/" "_" TARGET_EXE_NAME ${TARGET_EXE_NAME})
+  
+  MESSAGE("creating TARGET_EXE_NAME: '${TARGET_EXE_NAME}'")
+
+  add_executable(${TARGET_EXE_NAME} ${SRC_FILE} src/utilities.cpp)
+  
+endforeach()

@@ -54,66 +54,51 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/muni/Documents/sdp_ws
+CMAKE_SOURCE_DIR = /home/muni/Documents/sdp_ws/ws23-door-opening
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/muni/Documents/sdp_ws/build
+CMAKE_BINARY_DIR = /home/muni/Documents/sdp_ws/ws23-door-opening/build
 
 #=============================================================================
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: app/all
+all: CMakeFiles/src_main.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
-preinstall: app/preinstall
+preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: app/clean
+clean: CMakeFiles/src_main.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Directory level rules for directory app
-
-# Recursive "all" directory target.
-app/all: app/CMakeFiles/Executable.dir/all
-.PHONY : app/all
-
-# Recursive "preinstall" directory target.
-app/preinstall:
-.PHONY : app/preinstall
-
-# Recursive "clean" directory target.
-app/clean: app/CMakeFiles/Executable.dir/clean
-.PHONY : app/clean
-
-#=============================================================================
-# Target rules for target app/CMakeFiles/Executable.dir
+# Target rules for target CMakeFiles/src_main.dir
 
 # All Build rule for target.
-app/CMakeFiles/Executable.dir/all:
-	$(MAKE) $(MAKESILENT) -f app/CMakeFiles/Executable.dir/build.make app/CMakeFiles/Executable.dir/depend
-	$(MAKE) $(MAKESILENT) -f app/CMakeFiles/Executable.dir/build.make app/CMakeFiles/Executable.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/muni/Documents/sdp_ws/build/CMakeFiles --progress-num=1,2 "Built target Executable"
-.PHONY : app/CMakeFiles/Executable.dir/all
+CMakeFiles/src_main.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/src_main.dir/build.make CMakeFiles/src_main.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/src_main.dir/build.make CMakeFiles/src_main.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/muni/Documents/sdp_ws/ws23-door-opening/build/CMakeFiles --progress-num=1,2,3 "Built target src_main"
+.PHONY : CMakeFiles/src_main.dir/all
 
 # Build rule for subdir invocation for target.
-app/CMakeFiles/Executable.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/muni/Documents/sdp_ws/build/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 app/CMakeFiles/Executable.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/muni/Documents/sdp_ws/build/CMakeFiles 0
-.PHONY : app/CMakeFiles/Executable.dir/rule
+CMakeFiles/src_main.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/muni/Documents/sdp_ws/ws23-door-opening/build/CMakeFiles 3
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/src_main.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/muni/Documents/sdp_ws/ws23-door-opening/build/CMakeFiles 0
+.PHONY : CMakeFiles/src_main.dir/rule
 
 # Convenience name for target.
-Executable: app/CMakeFiles/Executable.dir/rule
-.PHONY : Executable
+src_main: CMakeFiles/src_main.dir/rule
+.PHONY : src_main
 
 # clean rule for target.
-app/CMakeFiles/Executable.dir/clean:
-	$(MAKE) $(MAKESILENT) -f app/CMakeFiles/Executable.dir/build.make app/CMakeFiles/Executable.dir/clean
-.PHONY : app/CMakeFiles/Executable.dir/clean
+CMakeFiles/src_main.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/src_main.dir/build.make CMakeFiles/src_main.dir/clean
+.PHONY : CMakeFiles/src_main.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.
