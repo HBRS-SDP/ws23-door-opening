@@ -6,7 +6,7 @@ project(Door_Opening VERSION 1.0.0 LANGUAGES CXX)
 set (CMAKE_CXX_STANDARD 11)
 
 
-include_directories(${PROJECT_SOURCE_DIR}/thirdParty/cxxopts/)
+include_directories(thirdParty/cxxopts/)
 
 add_compile_options(-Wall)
 add_compile_options(-Wno-reorder)
@@ -14,15 +14,15 @@ add_compile_options(-Wno-reorder)
 add_definitions(-D_OS_UNIX)
 
 
-
 link_libraries(${PROJECT_SOURCE_DIR}/lib/release/libKortexApiCpp.a)
 
 # Add Include Directories
-include_directories(${PROJECT_SOURCE_DIR}include)
-include_directories(${PROJECT_SOURCE_DIR}include/client)
-include_directories(${PROJECT_SOURCE_DIR}include/common)
-include_directories(${PROJECT_SOURCE_DIR}include/messages)
-include_directories(${PROJECT_SOURCE_DIR}include/client_stubs)
+include_directories(include)
+include_directories(include/client)
+include_directories(include/common)
+include_directories(include/messages)
+include_directories(include/client_stubs)
+include_directories(include/google)
 
 
 # link other libs
@@ -43,5 +43,6 @@ foreach ( SRC_FILE ${EXE_LIST} )
   MESSAGE("creating TARGET_EXE_NAME: '${TARGET_EXE_NAME}'")
 
   add_executable(${TARGET_EXE_NAME} ${SRC_FILE} src/utilities.cpp)
+
   
 endforeach()
