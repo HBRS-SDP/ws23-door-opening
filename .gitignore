@@ -9,3 +9,6 @@ venv/
 
 # Ignore build folder
 build/
+
+# Ignore Makefile
+Makefile/
