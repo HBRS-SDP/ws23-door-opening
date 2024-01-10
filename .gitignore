@@ -11,4 +11,4 @@ venv/
 build/
 
 # Ignore Makefile
-Makefile/
+Makefile
