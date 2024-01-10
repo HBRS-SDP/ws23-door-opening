@@ -1,3 +1,0 @@
-/home/muni/Documents/sdp_ws/ws23-door-opening/build/CMakeFiles/src_main.dir
-/home/muni/Documents/sdp_ws/ws23-door-opening/build/CMakeFiles/edit_cache.dir
-/home/muni/Documents/sdp_ws/ws23-door-opening/build/CMakeFiles/rebuild_cache.dir
