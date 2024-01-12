@@ -1,5 +1,13 @@
 # ws23-door-opening
- Open a door using Kinova arm
+Open a door using Kinova arm
+
+## Required external files
+- Kinova API
+    Obtained from:
+    https://github.com/Kinovarobotics/kortex
+- kdl-parser
+    Obtained from:
+    https://github.com/orocos/orocos_kinematics_dynamics
 
 ## Compilation Setup
 

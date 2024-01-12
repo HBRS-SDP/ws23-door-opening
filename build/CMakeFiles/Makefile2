@@ -63,6 +63,7 @@ CMAKE_BINARY_DIR = /home/muni/Documents/sdp_ws/ws23-door-opening/build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
+all: CMakeFiles/src_force_estimator.dir/all
 all: CMakeFiles/src_main.dir/all
 .PHONY : all
 
@@ -71,8 +72,35 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
+clean: CMakeFiles/src_force_estimator.dir/clean
 clean: CMakeFiles/src_main.dir/clean
 .PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/src_force_estimator.dir
+
+# All Build rule for target.
+CMakeFiles/src_force_estimator.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/src_force_estimator.dir/build.make CMakeFiles/src_force_estimator.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/src_force_estimator.dir/build.make CMakeFiles/src_force_estimator.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/muni/Documents/sdp_ws/ws23-door-opening/build/CMakeFiles --progress-num=1,2,3 "Built target src_force_estimator"
+.PHONY : CMakeFiles/src_force_estimator.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/src_force_estimator.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/muni/Documents/sdp_ws/ws23-door-opening/build/CMakeFiles 3
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/src_force_estimator.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/muni/Documents/sdp_ws/ws23-door-opening/build/CMakeFiles 0
+.PHONY : CMakeFiles/src_force_estimator.dir/rule
+
+# Convenience name for target.
+src_force_estimator: CMakeFiles/src_force_estimator.dir/rule
+.PHONY : src_force_estimator
+
+# clean rule for target.
+CMakeFiles/src_force_estimator.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/src_force_estimator.dir/build.make CMakeFiles/src_force_estimator.dir/clean
+.PHONY : CMakeFiles/src_force_estimator.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/src_main.dir
@@ -81,7 +109,7 @@ clean: CMakeFiles/src_main.dir/clean
 CMakeFiles/src_main.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/src_main.dir/build.make CMakeFiles/src_main.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/src_main.dir/build.make CMakeFiles/src_main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/muni/Documents/sdp_ws/ws23-door-opening/build/CMakeFiles --progress-num=1,2,3 "Built target src_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/muni/Documents/sdp_ws/ws23-door-opening/build/CMakeFiles --progress-num=4,5,6 "Built target src_main"
 .PHONY : CMakeFiles/src_main.dir/all
 
 # Build rule for subdir invocation for target.

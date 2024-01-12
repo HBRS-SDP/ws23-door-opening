@@ -207,6 +207,9 @@ Door_Opening_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 Door_Opening_SOURCE_DIR:STATIC=/home/muni/Documents/sdp_ws/ws23-door-opening
 
+//The directory containing a CMake configuration file for kdl/orocos_kdl.
+kdl/orocos_kdl_DIR:PATH=kdl/orocos_kdl_DIR-NOTFOUND
+
 
 ########################
 # INTERNAL cache entries
