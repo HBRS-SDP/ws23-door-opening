@@ -14,15 +14,18 @@
 # EXTERNAL cache entries
 ########################
 
+//Build models for some well known robots
+BUILD_MODELS:BOOL=OFF
+
 //Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=/usr/bin/addr2line
 
 //Path to a program.
 CMAKE_AR:FILEPATH=/usr/bin/ar
 
-//Choose the type of build, options are: None Debug Release RelWithDebInfo
-// MinSizeRel ...
-CMAKE_BUILD_TYPE:STRING=
+//Choose the type of build, options are: None(CMAKE_CXX_FLAGS or
+// CMAKE_C_FLAGS used) Debug Release RelWithDebInfo MinSizeRel.
+CMAKE_BUILD_TYPE:STRING=Release
 
 //Enable/Disable color output during build.
 CMAKE_COLOR_MAKEFILE:BOOL=ON
@@ -52,6 +55,32 @@ CMAKE_CXX_FLAGS_RELEASE:STRING=-O3 -DNDEBUG
 
 //Flags used by the CXX compiler during RELWITHDEBINFO builds.
 CMAKE_CXX_FLAGS_RELWITHDEBINFO:STRING=-O2 -g -DNDEBUG
+
+//C compiler
+CMAKE_C_COMPILER:FILEPATH=/usr/bin/cc
+
+//A wrapper around 'ar' adding the appropriate '--plugin' option
+// for the GCC compiler
+CMAKE_C_COMPILER_AR:FILEPATH=/usr/bin/gcc-ar-11
+
+//A wrapper around 'ranlib' adding the appropriate '--plugin' option
+// for the GCC compiler
+CMAKE_C_COMPILER_RANLIB:FILEPATH=/usr/bin/gcc-ranlib-11
+
+//Flags used by the C compiler during all build types.
+CMAKE_C_FLAGS:STRING=
+
+//Flags used by the C compiler during DEBUG builds.
+CMAKE_C_FLAGS_DEBUG:STRING=-g
+
+//Flags used by the C compiler during MINSIZEREL builds.
+CMAKE_C_FLAGS_MINSIZEREL:STRING=-Os -DNDEBUG
+
+//Flags used by the C compiler during RELEASE builds.
+CMAKE_C_FLAGS_RELEASE:STRING=-O3 -DNDEBUG
+
+//Flags used by the C compiler during RELWITHDEBINFO builds.
+CMAKE_C_FLAGS_RELWITHDEBINFO:STRING=-O2 -g -DNDEBUG
 
 //Path to a program.
 CMAKE_DLLTOOL:FILEPATH=CMAKE_DLLTOOL-NOTFOUND
@@ -207,8 +236,35 @@ Door_Opening_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 Door_Opening_SOURCE_DIR:STATIC=/home/muni/Documents/sdp_ws/ws23-door-opening
 
-//The directory containing a CMake configuration file for kdl/orocos_kdl.
-kdl/orocos_kdl_DIR:PATH=kdl/orocos_kdl_DIR-NOTFOUND
+//OFF
+ENABLE_EXAMPLES:BOOL=OFF
+
+//OFF
+ENABLE_TESTS:BOOL=OFF
+
+//The directory containing a CMake configuration file for Eigen3.
+Eigen3_DIR:PATH=/usr/share/eigen3/cmake
+
+//Use the new KDL Tree interface
+KDL_USE_NEW_TREE_INTERFACE:BOOL=OFF
+
+//Enable RPATH during installation
+OROCOSKDL_ENABLE_RPATH:BOOL=ON
+
+//The directory containing a CMake configuration file for catkin.
+catkin_DIR:PATH=catkin_DIR-NOTFOUND
+
+//Dependencies for the target
+orocos-kdl_LIB_DEPENDS:STATIC=general;/home/muni/Documents/sdp_ws/ws23-door-opening/lib/release/libKortexApiCpp.a;general;pthread;general;yaml-cpp;general;kdl_parser;general;orocos_kdl;
+
+//Value Computed by CMake
+orocos_kdl_BINARY_DIR:STATIC=/home/muni/Documents/sdp_ws/ws23-door-opening/build/kdl/orocos_kdl
+
+//Value Computed by CMake
+orocos_kdl_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+orocos_kdl_SOURCE_DIR:STATIC=/home/muni/Documents/sdp_ws/ws23-door-opening/kdl/orocos_kdl
 
 
 ########################
@@ -251,6 +307,22 @@ CMAKE_CXX_FLAGS_MINSIZEREL-ADVANCED:INTERNAL=1
 CMAKE_CXX_FLAGS_RELEASE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_CXX_FLAGS_RELWITHDEBINFO
 CMAKE_CXX_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_C_COMPILER
+CMAKE_C_COMPILER-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_C_COMPILER_AR
+CMAKE_C_COMPILER_AR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_C_COMPILER_RANLIB
+CMAKE_C_COMPILER_RANLIB-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_C_FLAGS
+CMAKE_C_FLAGS-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_C_FLAGS_DEBUG
+CMAKE_C_FLAGS_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_C_FLAGS_MINSIZEREL
+CMAKE_C_FLAGS_MINSIZEREL-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_C_FLAGS_RELEASE
+CMAKE_C_FLAGS_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_C_FLAGS_RELWITHDEBINFO
+CMAKE_C_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_DLLTOOL
 CMAKE_DLLTOOL-ADVANCED:INTERNAL=1
 //Executable file format
@@ -342,4 +414,8 @@ CMAKE_STRIP-ADVANCED:INTERNAL=1
 CMAKE_UNAME:INTERNAL=/usr/bin/uname
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//Test HAVE_STL_CONTAINER_INCOMPLETE_TYPES
+HAVE_STL_CONTAINER_INCOMPLETE_TYPES:INTERNAL=1
+//ADVANCED property for variable: OROCOSKDL_ENABLE_RPATH
+OROCOSKDL_ENABLE_RPATH-ADVANCED:INTERNAL=1
 
