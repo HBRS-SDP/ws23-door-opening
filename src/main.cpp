@@ -216,7 +216,7 @@ bool move_to_cartesian_position(k_api::Base::BaseClient* base, const Pose& targe
 
         std::cout << "Opening gripper using speed command..." << std::endl;
         gripper_command.set_mode(k_api::Base::GRIPPER_SPEED);
-        finger->set_value(0.5);
+        finger->set_value(0.3);
         base->SendGripperCommand(gripper_command);
         k_api::Base::Gripper gripper_feedback;
         k_api::Base::GripperRequest gripper_request;
@@ -245,42 +245,58 @@ bool move_to_cartesian_position(k_api::Base::BaseClient* base, const Pose& targe
 bool Close(k_api::Base::BaseClient* base, bool m_is_init)
     {
         if (m_is_init == false)
-        {
-            return false;
-        }
-        std::cout << "Performing gripper test in position..." << std::endl;
-        k_api::Base::GripperRequest gripper_request;
-        bool is_motion_completed = false;
-        k_api::Base::GripperCommand gripper_command;
-        k_api::Base::Gripper gripper_feedback;
-        gripper_request.set_mode(k_api::Base::GRIPPER_POSITION);
+            {
+                return false;
+            }
 
-        auto finger = gripper_command.mutable_gripper()->add_finger();
+            std::cout << "Closing gripper using speed command..." << std::endl;
 
+            k_api::Base::GripperCommand gripper_command;
+            gripper_command.set_mode(k_api::Base::GRIPPER_SPEED);
 
-        std::cout << "Closing gripper using speed command..." << std::endl;
-        finger->set_value(-0.1);
-        base->SendGripperCommand(gripper_command);
-        is_motion_completed = false;
-        gripper_request.set_mode(k_api::Base::GRIPPER_SPEED);
+            auto finger = gripper_command.mutable_gripper()->add_finger();
+            finger->set_finger_identifier(1);
+            finger->set_value(-0.2);
+
+            base->SendGripperCommand(gripper_command);
+
+            k_api::Base::Gripper gripper_feedback;
+            k_api::Base::GripperRequest gripper_request;
+            bool is_motion_completed = false;
+            std::cout<< "##" << is_motion_completed << "##" << std::endl;
+
+           gripper_request.set_mode(k_api::Base::GRIPPER_SPEED);
         while(!is_motion_completed)
         {
+
+            float position =0.00000f;
             float speed = 0.0;
             gripper_feedback = base->GetMeasuredGripperMovement(gripper_request);
             if (gripper_feedback.finger_size())
             {
+                position = gripper_feedback.finger(0).value();
+                cout << "Reported position for closing : " << position << std::endl;
                 speed = gripper_feedback.finger(0).value();
                 cout << "Reported speed : " << speed  << std::endl;
             }
 
-            if (speed == 0.0f)
+            if (speed ==0.0f)
             {
-                is_motion_completed = true;
+                std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+                speed = gripper_feedback.finger(0).value();
+                cout << "in the loop " << std::endl;
+                cout << "Reported speed : " << speed  << std::endl;
+                if (speed==0.0f)
+                    {
+                        is_motion_completed=true;
+                    }
+                    
             }
 
         }
-        return true;
 
+            return true;
+        
     }
 
 
@@ -293,7 +309,7 @@ int main(int argc, char **argv)
     auto error_callback = [](k_api::KError err){ cout << "_________ callback error _________" << err.toString(); };
     auto transport = new k_api::TransportClientTcp();
     auto router = new k_api::RouterClient(transport, error_callback);
-    transport->connect("192.168.1.10", PORT);
+    transport->connect("192.168.1.12", PORT);
 
     // Set session data connection information
     auto create_session_info = k_api::Session::CreateSessionInfo();
@@ -331,11 +347,13 @@ int main(int argc, char **argv)
     success &= move_to_home_position(base);
     success &= move_to_cartesian_position(base, initialPose, base_feedback);
     std::cout << "Home position is done" << std::endl;
+    success &=Open(base,m_is_init);
     // success &= move_to_cartesian_position(base, targetPose, base_feedback);
     std::cout << "move_to_cartesian_position is done" << std::endl;
     success &= move_to_cartesian_position(base, towardsTheHandle, base_feedback);
     std::cout << "Moved towarddds the handle" << std ::endl;
     success &= move_to_cartesian_position(base, endeffectorClosed, base_feedback);
+    success &=Close(base,m_is_init);
     std::cout << "endeffector is closed" << std ::endl;
     success &= move_to_cartesian_position(base, doorUnlacthed, base_feedback);
     std::cout << "door is unlatched" << std ::endl;
@@ -343,6 +361,7 @@ int main(int argc, char **argv)
     std ::cout <<"The door has been unlacted"<<std :: endl;
     success &= move_to_cartesian_position(base, doorOpening, base_feedback);
     std ::cout <<"The unlatched door is being opened"<<std :: endl;
+    success &=Open(base,m_is_init);
     success &= move_to_cartesian_position(base, doorOpen1, base_feedback);
     std ::cout <<"First half of opening is done"<<std :: endl;
     success &= move_to_cartesian_position(base, doorOpen2, base_feedback);
