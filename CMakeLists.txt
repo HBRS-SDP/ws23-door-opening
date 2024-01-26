@@ -6,13 +6,12 @@ project(Door_Opening VERSION 1.0.0 LANGUAGES CXX)
 set (CMAKE_CXX_STANDARD 11)
 
 include_directories(thirdParty/cxxopts/)
-#include_directories(kdl/orocos_kdl/src/)
+include_directories(thirdParty/orocos_kdl/)
 
 add_compile_options(-Wall)
 add_compile_options(-Wno-reorder)
-
+ 
 add_definitions(-D_OS_UNIX)
-
 
 link_libraries(${PROJECT_SOURCE_DIR}/lib/release/libKortexApiCpp.a)
 
@@ -24,12 +23,11 @@ include_directories(include/messages)
 include_directories(include/client_stubs)
 include_directories(include/google)
 
-include_directories(kdl/orocos_kdl/src/)
 
 # link other libs
 
 link_libraries(pthread)
-link_libraries(yaml-cpp kdl_parser orocos_kdl)
+# link_libraries(yaml-cpp kdl_parser orocos_kdl)
 
 
 # Create executable for each file

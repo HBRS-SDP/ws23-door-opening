@@ -25,7 +25,7 @@
 #include "chainidsolver_recursive_newton_euler.hpp"
 #include "articulatedbodyinertia.hpp"
 #include "jntspaceinertiamatrix.hpp"
-#include <eigen3/Eigen/StdVector>
+#include <Eigen/StdVector>
 
 namespace KDL {
 

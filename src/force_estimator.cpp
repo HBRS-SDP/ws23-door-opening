@@ -10,7 +10,7 @@
 
 #include <chain.hpp>
 #include <tree.hpp>
-#include <kdl_parser/kdl_parser.hpp>
+#include <kdl_parser.hpp>
 #include <chainexternalwrenchestimator.hpp>
 
 using namespace KDL;

@@ -25,7 +25,7 @@
 #define SVD_EIGEN_HH_HPP
 
 
-#include <eigen3/Eigen/Core>
+#include <Eigen/Core>
 #include <algorithm>
 
 namespace KDL

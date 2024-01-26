@@ -31,7 +31,7 @@
 #define KDL_VERSION_STRING "@KDL_VERSION@"
 
 //Set which version of the Tree Interface to use
-// #cmakedefine HAVE_STL_CONTAINER_INCOMPLETE_TYPES
-// #cmakedefine KDL_USE_NEW_TREE_INTERFACE
+#cmakedefine HAVE_STL_CONTAINER_INCOMPLETE_TYPES
+#cmakedefine KDL_USE_NEW_TREE_INTERFACE
 
 #endif //#define KDL_CONFIG_H

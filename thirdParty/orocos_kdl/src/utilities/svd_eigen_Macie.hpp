@@ -31,7 +31,7 @@
 #ifndef SVD_EIGEN_MACIE
 #define SVD_EIGEN_MACIE
 
-#include <eigen3/Eigen/Core>
+#include <Eigen/Core>
 
 
 namespace KDL
