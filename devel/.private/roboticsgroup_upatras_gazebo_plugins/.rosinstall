@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/oviya/ws23-door-opening/devel/.private/roboticsgroup_upatras_gazebo_plugins/setup.sh

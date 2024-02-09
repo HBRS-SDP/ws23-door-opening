@@ -1,0 +1,1 @@
+/home/oviya/ws23-door-opening/devel/.private/gazebo_grasp_plugin/share/gazebo_grasp_plugin/cmake/gazebo_grasp_pluginConfig-version.cmake

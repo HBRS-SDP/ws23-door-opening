@@ -1,0 +1,6 @@
+ros_kortex/third_party/gazebo-pkgs/gazebo_grasp_plugin
+/home/oviya/ws23-door-opening/devel/.private/gazebo_grasp_plugin/cmake.lock /home/oviya/ws23-door-opening/devel/./cmake.lock
+/home/oviya/ws23-door-opening/devel/.private/gazebo_grasp_plugin/lib/libgazebo_grasp_fix.so /home/oviya/ws23-door-opening/devel/lib/libgazebo_grasp_fix.so
+/home/oviya/ws23-door-opening/devel/.private/gazebo_grasp_plugin/lib/pkgconfig/gazebo_grasp_plugin.pc /home/oviya/ws23-door-opening/devel/lib/pkgconfig/gazebo_grasp_plugin.pc
+/home/oviya/ws23-door-opening/devel/.private/gazebo_grasp_plugin/share/gazebo_grasp_plugin/cmake/gazebo_grasp_pluginConfig.cmake /home/oviya/ws23-door-opening/devel/share/gazebo_grasp_plugin/cmake/gazebo_grasp_pluginConfig.cmake
+/home/oviya/ws23-door-opening/devel/.private/gazebo_grasp_plugin/share/gazebo_grasp_plugin/cmake/gazebo_grasp_pluginConfig-version.cmake /home/oviya/ws23-door-opening/devel/share/gazebo_grasp_plugin/cmake/gazebo_grasp_pluginConfig-version.cmake

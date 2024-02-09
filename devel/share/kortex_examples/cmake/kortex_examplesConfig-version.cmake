@@ -1,0 +1,1 @@
+/home/oviya/ws23-door-opening/devel/.private/kortex_examples/share/kortex_examples/cmake/kortex_examplesConfig-version.cmake

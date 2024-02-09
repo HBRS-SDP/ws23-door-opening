@@ -1,0 +1,1 @@
+/home/oviya/ws23-door-opening/devel/.private/door_opening/share/door_opening/cmake/door_openingConfig-version.cmake

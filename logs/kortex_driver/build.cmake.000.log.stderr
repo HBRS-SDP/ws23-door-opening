@@ -1,0 +1,7 @@
+CONAN_TARGET_PLATFORM is x86
+conanfile.py: WARN:
+     ************************************************
+     The 'cmake' generator is deprecated.
+     Please update your code and remove it.
+     *************************************************
+
