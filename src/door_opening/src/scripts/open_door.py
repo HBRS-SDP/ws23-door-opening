@@ -85,13 +85,14 @@ class DoorOpening:
             self.is_init_success = True
 
     def _force_callback(self, msg):
-
-        self._force['x'].append(msg.base.tool_external_wrench_force_x)
-        self._force['y'].append(msg.base.tool_external_wrench_force_y)
-        self._force['z'].append(msg.base.tool_external_wrench_force_z)
-        self._force['t_x'].append(msg.base.tool_external_wrench_torque_x)
-        self._force['t_y'].append(msg.base.tool_external_wrench_torque_y)
-        self._force['t_z'].append(msg.base.tool_external_wrench_torque_z)
+        self.average_threshold=15
+        self.data_size_limit = 10
+        self._force['x'].append(abs(msg.base.tool_external_wrench_force_x))
+        self._force['y'].append(abs(msg.base.tool_external_wrench_force_y))
+        self._force['z'].append(abs(msg.base.tool_external_wrench_force_z))
+        self._force['t_x'].append(abs(msg.base.tool_external_wrench_torque_x))
+        self._force['t_y'].append(abs(msg.base.tool_external_wrench_torque_y))
+        self._force['t_z'].append(abs(msg.base.tool_external_wrench_torque_z))
         # self.checker=self._force['z']
         # if len(self.checker) >20:
         #     val=np.average(self.checker)
@@ -103,7 +104,22 @@ class DoorOpening:
         #     else:
         #         print("normal force")
         #         self.checker=[]
-        #         print(len(self.checker))    
+        #         print(len(self.checker))   
+         
+        # self.force_data['x'].append(force_x)
+        # self.force_data['y'].append(force_y)
+        # self.force_data['z'].append(force_z)
+
+        # Keep only the last 10 elements in each list
+        for axis in self._force:
+            self._force[axis] = self._force[axis][-self.data_size_limit:]
+
+        # Check if the average force exceeds the threshold
+        for axis in self._force:
+            average_force = sum(self._force[axis]) / len(self._force[axis])
+            if average_force > self.average_threshold:
+                rospy.logwarn(f"Warning: Average force on axis {axis} exceeds. Average force: {average_force}N")
+
 
 
     def cb_action_topic(self, notif):
@@ -152,7 +168,7 @@ class DoorOpening:
         # Wait a bit
         rospy.sleep(0.25)
 
-    def move_to_cartesian_pose(self,pose,val,translation_speed,orientation_speed):
+    def move_to_cartesian_pose(self,pose,translation_speed,orientation_speed):
         req1 = SetCartesianReferenceFrameRequest()
         req1.input.reference_frame = CartesianReferenceFrame.CARTESIAN_REFERENCE_FRAME_MIXED
         self.cartesian_speed = CartesianSpeed()
@@ -220,46 +236,51 @@ class DoorOpening:
         return True
     
     def open_door_clockwise(self):
-        towards_door_pose = ConstrainedPose()
-        towards_door_pose.target_pose.x = 0.454
-        towards_door_pose.target_pose.y = 0.776
-        towards_door_pose.target_pose.z = 0.661
-        towards_door_pose.target_pose.theta_x = 55.529
-        towards_door_pose.target_pose.theta_y = -14.266
-        towards_door_pose.target_pose.theta_z = 165.524
+        try:
 
-        self.move_to_cartesian_pose(towards_door_pose,2,0.5,15)
+            towards_door_pose = ConstrainedPose()
+            towards_door_pose.target_pose.x = 0.454
+            towards_door_pose.target_pose.y = 0.776
+            towards_door_pose.target_pose.z = 0.661
+            towards_door_pose.target_pose.theta_x = 55.529
+            towards_door_pose.target_pose.theta_y = -14.266
+            towards_door_pose.target_pose.theta_z = 165.524
 
-        # Let's close the gripper at 50%
-        if self.is_gripper_present:
-            success &= self.gripper_command(1.0)
-            time.sleep(0.5)
-        else:
-            rospy.logwarn("No gripper is present on the arm.") 
+            self.move_to_cartesian_pose(towards_door_pose,0.5,15)
 
-        #unlatch the door
-        
-        unlatch_door = ConstrainedPose()
-        unlatch_door.target_pose.x = 0.419
-        unlatch_door.target_pose.y = 0.788
-        unlatch_door.target_pose.z = 0.664
-        unlatch_door.target_pose.theta_x = 58.568
-        unlatch_door.target_pose.theta_y = -8.615
-        unlatch_door.target_pose.theta_z = 158.7
+            # Let's close the gripper at 50%
+            if self.is_gripper_present:
+                success &= self.gripper_command(1.0)
+                time.sleep(0.5)
+            else:
+                rospy.logwarn("No gripper is present on the arm.") 
 
-        self.move_to_cartesian_pose(unlatch_door,2,0.5,15)
+            #unlatch the door
             
+            unlatch_door = ConstrainedPose()
+            unlatch_door.target_pose.x = 0.419
+            unlatch_door.target_pose.y = 0.788
+            unlatch_door.target_pose.z = 0.664
+            unlatch_door.target_pose.theta_x = 58.568
+            unlatch_door.target_pose.theta_y = -8.615
+            unlatch_door.target_pose.theta_z = 158.7
 
-        open_door_pose = ConstrainedPose()
-        open_door_pose.target_pose.x = 0.383
-        open_door_pose.target_pose.y = 0.527
-        open_door_pose.target_pose.z = 0.51
-        open_door_pose.target_pose.theta_x = 36.967
-        open_door_pose.target_pose.theta_y = -3.882
-        open_door_pose.target_pose.theta_z = 160.227
+            self.move_to_cartesian_pose(unlatch_door,0.5,15)
+                
 
-        self.move_to_cartesian_pose(open_door_pose,2,0.5,15)
+            open_door_pose = ConstrainedPose()
+            open_door_pose.target_pose.x = 0.383
+            open_door_pose.target_pose.y = 0.527
+            open_door_pose.target_pose.z = 0.51
+            open_door_pose.target_pose.theta_x = 36.967
+            open_door_pose.target_pose.theta_y = -3.882
+            open_door_pose.target_pose.theta_z = 160.227
 
+            self.move_to_cartesian_pose(open_door_pose,0.5,15)
+        except:
+            return False
+
+        return True
     
 
 
@@ -308,25 +329,25 @@ class DoorOpening:
             #     rospy.logwarn("No gripper is present on the arm.")   
 
 
-            my_constrained_pose = ConstrainedPose()
-            my_constrained_pose.target_pose.x = 0.398
-            my_constrained_pose.target_pose.y = 0.598
-            my_constrained_pose.target_pose.z = 0.662
-            my_constrained_pose.target_pose.theta_x = 172.677
-            my_constrained_pose.target_pose.theta_y = -159.219
-            my_constrained_pose.target_pose.theta_z = 78.821
+            # my_constrained_pose = ConstrainedPose()
+            # my_constrained_pose.target_pose.x = 0.398
+            # my_constrained_pose.target_pose.y = 0.598
+            # my_constrained_pose.target_pose.z = 0.662
+            # my_constrained_pose.target_pose.theta_x = 172.677
+            # my_constrained_pose.target_pose.theta_y = -159.219
+            # my_constrained_pose.target_pose.theta_z = 78.821
 
-            success &=self.move_to_cartesian_pose(my_constrained_pose,2,0.5,15)
-            print("start")
+            # success &=self.move_to_cartesian_pose(my_constrained_pose,0.5,15)
+            # print("start")
             towards_door_pose = ConstrainedPose()
-            towards_door_pose.target_pose.x = 0.454
-            towards_door_pose.target_pose.y = 0.776
-            towards_door_pose.target_pose.z = 0.661
-            towards_door_pose.target_pose.theta_x = 55.529
-            towards_door_pose.target_pose.theta_y = -14.266
-            towards_door_pose.target_pose.theta_z = 165.524
+            towards_door_pose.target_pose.x = 0.464
+            towards_door_pose.target_pose.y = 0.742
+            towards_door_pose.target_pose.z = 0.725
+            towards_door_pose.target_pose.theta_x = 55.533
+            towards_door_pose.target_pose.theta_y = -7.979
+            towards_door_pose.target_pose.theta_z = 157.812
 
-            success &=self.move_to_cartesian_pose(towards_door_pose,2,0.5,15)
+            success &=self.move_to_cartesian_pose(towards_door_pose,0.5,15)
 
             # Let's close the gripper at 50%
             if self.is_gripper_present:
@@ -338,29 +359,30 @@ class DoorOpening:
             #unlatch the door
             
             unlatch_door = ConstrainedPose()
-            unlatch_door.target_pose.x = 0.419
-            unlatch_door.target_pose.y = 0.788
-            unlatch_door.target_pose.z = 0.664
-            unlatch_door.target_pose.theta_x = 58.568
-            unlatch_door.target_pose.theta_y = -8.615
-            unlatch_door.target_pose.theta_z = 158.7
+            unlatch_door.target_pose.x = 0.454
+            unlatch_door.target_pose.y = 0.748
+            unlatch_door.target_pose.z = 0.726
+            unlatch_door.target_pose.theta_x = 55.547
+            unlatch_door.target_pose.theta_y = -5.892
+            unlatch_door.target_pose.theta_z = 156.254
 
-            success &=self.move_to_cartesian_pose(unlatch_door,2,0.5,15)
+            success &=self.move_to_cartesian_pose(unlatch_door,0.5,15)
                 
 
             open_door_pose = ConstrainedPose()
             open_door_pose.target_pose.x = 0.383
             open_door_pose.target_pose.y = 0.527
             open_door_pose.target_pose.z = 0.51
-            open_door_pose.target_pose.theta_x = 36.967
-            open_door_pose.target_pose.theta_y = -3.882
-            open_door_pose.target_pose.theta_z = 160.227
+            open_door_pose.target_pose.theta_x = 55.547
+            open_door_pose.target_pose.theta_y = -5.892
+            open_door_pose.target_pose.theta_z = 156.254
+            
+            success &=self.move_to_cartesian_pose(open_door_pose,0.5,15)
 
-            success &=self.move_to_cartesian_pose(open_door_pose,2,0.5,15)
+            success &= self.all_notifs_succeeded
 
             success &= self.all_notifs_succeeded
 
-            success &= self.all_notifs_succeeded
 
         # For testing purposes
         rospy.set_param("/kortex_examples_test_results/cartesian_poses_with_notifications_python", success)
