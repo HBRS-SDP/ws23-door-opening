@@ -1,0 +1,1 @@
+/home/oviya/ws23-door-opening/devel/.private/kinova_vision/share/kinova_vision/cmake/kinova_visionConfig.cmake

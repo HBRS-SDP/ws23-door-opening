@@ -12,7 +12,7 @@ import tf2_geometry_msgs
 import sys
 print(sys.path)
 import sys
-sys.path.append('/home/maira/catkin_ws/src/lever_detection/scripts')
+sys.path.append('/home/oviya/ws23-door-opening/src/ros_pkg/lever_detection/scripts')
 
 # import coordetector
 from coordetector import t2d2t3d
@@ -30,7 +30,7 @@ class LeverDetector:
         self.image_pub=rospy.Publisher("lever_image", Image, queue_size=10)
         
 
-        self.model = torch.hub.load('ultralytics/yolov5', 'custom', path='src/lever_detection/model/door.pt')
+        self.model = torch.hub.load('ultralytics/yolov5', 'custom', path='src/ros_pkg/lever_detection/model/door.pt')
         self.cv_image = None
         self.cloud_data = None
         self.td23D = t2d2t3d()

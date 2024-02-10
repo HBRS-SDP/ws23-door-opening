@@ -8,7 +8,7 @@ from cv_bridge import CvBridge
 from std_msgs.msg import String  # Simple string message for demonstration
 
 # Load a pre-trained object detection model. Adjust path as necessary.
-model = torch.hub.load('ultralytics/yolov5', 'custom', path='src/lever_detection/model/door.pt')
+model = torch.hub.load('ultralytics/yolov5', 'custom', path='src/ros_pkg/lever_detection/model/door.pt')
 bridge = CvBridge()
 
 def detect_lever_and_draw_boxes(image):

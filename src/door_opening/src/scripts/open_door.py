@@ -14,7 +14,8 @@
 import sys
 import rospy
 import time
-
+from geometry_msgs.msg import PoseStamped
+from tf.transformations import euler_from_quaternion
 from kortex_driver.msg import TwistCommand
 import kortex_driver
 from kortex_driver.srv import *
@@ -37,11 +38,12 @@ class DoorOpening:
 
             self.all_notifs_succeeded = True
 
+            self.door_configuration = "push"
+
             # Get node params
             self.robot_name = rospy.get_param('~robot_name', "my_gen3")
             self.degrees_of_freedom = rospy.get_param("/" + self.robot_name + "/degrees_of_freedom", 7)
             self.is_gripper_present = rospy.get_param("/" + self.robot_name + "/is_gripper_present", False)
-
             rospy.loginfo("Using robot_name " + self.robot_name)
             self._force = {'x': [], 
                        'y': [], 
@@ -53,6 +55,8 @@ class DoorOpening:
             self._force_subscriber = rospy.Subscriber("/my_gen3/base_feedback", kortex_driver.msg.BaseCyclic_Feedback, self._force_callback)
             self.action_topic_sub = rospy.Subscriber("/" + self.robot_name + "/action_topic", ActionNotification, self.cb_action_topic)
             self.last_action_notif_type = None
+            self.pose_subscriber = rospy.Subscriber('lever_pose',  PoseStamped, self.pose_conversion_callback)
+            self.pose = tuple()
 
             #Init publishers
             # cartesian velocity publislher
@@ -87,6 +91,34 @@ class DoorOpening:
             self.is_init_success = False
         else:
             self.is_init_success = True
+
+
+    def pose_conversion_callback(self, pose_msg):
+        self.pose = self.get_kinovapose_from_pose_stamped(pose_msg)
+
+    def get_kinovapose_from_pose_stamped(pose: PoseStamped):
+        '''
+        Converts a PoseStamped message to a KinovaPose.
+
+        input: pose (PoseStamped): The PoseStamped message.
+        '''
+
+        # convert the quaternion to euler angles
+        quaternion = (
+            pose.pose.orientation.x,
+            pose.pose.orientation.y,
+            pose.pose.orientation.z,
+            pose.pose.orientation.w
+        )
+        euler = euler_from_quaternion(quaternion)
+
+        # convert the euler angles to degrees
+        theta_x_deg = math.degrees(euler[0])
+        theta_y_deg = math.degrees(euler[1])
+        theta_z_deg = math.degrees(euler[2])
+
+        return tuple(pose.pose.position.x, pose.pose.position.y, pose.pose.position.z, theta_x_deg, theta_y_deg, theta_z_deg)
+
 
     def _force_callback(self, msg):
         self.average_threshold=15
@@ -123,6 +155,8 @@ class DoorOpening:
             average_force = sum(self._force[axis]) / len(self._force[axis])
             if average_force > self.average_threshold:
                 rospy.logwarn(f"Warning: Average force on axis {axis} exceeds. Average force: {average_force}N")
+                self.door_configuration ="pull"
+                print(self.door_configuration)
 
 
 
@@ -325,12 +359,31 @@ class DoorOpening:
         """
 
         velocity_vector = TwistCommand()
-        velocity_vector.reference_frame = CartesianReferenceFrame.CARTESIAN_REFERENCE_FRAME_MIXED # for proper joypad control
+        velocity_vector.reference_frame = CartesianReferenceFrame.CARTESIAN_REFERENCE_FRAME_MIXED 
         self.cartesian_velocity_pub.publish(velocity_vector)
         return True
         
-    
+    def move_to_home_pose(self):
+        home_position = ConstrainedPose()
+        home_position.target_pose.x = 0.373
+        home_position.target_pose.y = 0.469
+        home_position.target_pose.z = 0.64
+        home_position.target_pose.theta_x = 176.746
+        home_position.target_pose.theta_y = -147.887
+        home_position.target_pose.theta_z = 92
 
+        self.move_to_cartesian_pose(home_position,0.5,15)
+    
+    def get_co_ordinate(self):
+        self.co_ordinate=ConstrainedPose()
+        self.co_ordinate.target_pose.x = 0.373
+        self.co_ordinate.target_pose.y = 0.469
+        self.co_ordinate.target_pose.z = 0.64
+        self.co_ordinate.target_pose.theta_x = 176.746
+        self.co_ordinate.target_pose.theta_y = -147.887
+        self.co_ordinate.target_pose.theta_z = 92
+
+        return self.co_ordinate
 
     def main(self):
         # For testing purposes
@@ -358,78 +411,27 @@ class DoorOpening:
 
             #*******************************************************************************
 
-            # Example of gripper command
-            # Let's fully open the gripper
-            # if self.is_gripper_present:
-            #     success &= self.gripper_command(0.0)
-            # else:
-            #     rospy.logwarn("No gripper is present on the arm.")  
+            success &=self.move_to_home_pose(self)
+            # handel_pose=self.get_co_ordinate(self)
+            # success &=self.move_to_cartesian_pose(handel_pose,1.5,15)
 
-            # print("gripper should have closed")
-            # time.sleep(0.05)
+            # moving_time =  10
+            # initial_time = time.now()
+            # current_elapsed_time = time.now()
 
-            # # Example of gripper command
-            # # Let's close the gripper at 50%
-            # if self.is_gripper_present:
-            #     success &= self.gripper_command(1.0)
-            #     time.sleep(0.5)
-            # else:
-            #     rospy.logwarn("No gripper is present on the arm.")   
+            # self.move_with_velocity(distance = 0.5,moving_time = moving_time,direction="z")
+            # while(current_elapsed_time < moving_time):
+            #     current_elapsed_time = time.now() - initial_time
+            #     if self.door_configuration =="pull":
+            #         self.stop_velocity()
+            #         break
 
+            # self.stop_velocity()
 
-            # my_constrained_pose = ConstrainedPose()
-            # my_constrained_pose.target_pose.x = 0.398
-            # my_constrained_pose.target_pose.y = 0.598
-            # my_constrained_pose.target_pose.z = 0.662
-            # my_constrained_pose.target_pose.theta_x = 172.677
-            # my_constrained_pose.target_pose.theta_y = -159.219
-            # my_constrained_pose.target_pose.theta_z = 78.821
+            print(self.pose)
 
-            # success &=self.move_to_cartesian_pose(my_constrained_pose,0.5,15)
-            # print("start")
-            # towards_door_pose = ConstrainedPose()
-            # towards_door_pose.target_pose.x = 0.464
-            # towards_door_pose.target_pose.y = 0.742
-            # towards_door_pose.target_pose.z = 0.725
-            # towards_door_pose.target_pose.theta_x = 55.533
-            # towards_door_pose.target_pose.theta_y = -7.979
-            # towards_door_pose.target_pose.theta_z = 157.812
-
-            # success &=self.move_to_cartesian_pose(towards_door_pose,0.5,15)
-
-            # # Let's close the gripper at 50%
-            # if self.is_gripper_present:
-            #     success &= self.gripper_command(1.0)
-            #     time.sleep(0.5)
-            # else:
-            #     rospy.logwarn("No gripper is present on the arm.") 
-
-            # #unlatch the door
-            
-            # unlatch_door = ConstrainedPose()
-            # unlatch_door.target_pose.x = 0.454
-            # unlatch_door.target_pose.y = 0.748
-            # unlatch_door.target_pose.z = 0.726
-            # unlatch_door.target_pose.theta_x = 55.547
-            # unlatch_door.target_pose.theta_y = -5.892
-            # unlatch_door.target_pose.theta_z = 156.254
-
-            # success &=self.move_to_cartesian_pose(unlatch_door,0.5,15)
-                
-
-            # open_door_pose = ConstrainedPose()
-            # open_door_pose.target_pose.x = 0.383
-            # open_door_pose.target_pose.y = 0.527
-            # open_door_pose.target_pose.z = 0.51
-            # open_door_pose.target_pose.theta_x = 55.547
-            # open_door_pose.target_pose.theta_y = -5.892
-            # open_door_pose.target_pose.theta_z = 156.254
-            
-            # success &=self.move_to_cartesian_pose(open_door_pose,0.5,15)
-
-            # success &=self.open_door_clockwise()
-
-            success &=self.move_with_velocity(0.5, 10, "z", velocity=None, ref_frame=CartesianReferenceFrame.CARTESIAN_REFERENCE_FRAME_TOOL)
+            # if self.door_configuration =="pull":
+            # success &=self.move_with_velocity(0.5, 10, "z", velocity=None, ref_frame=CartesianReferenceFrame.CARTESIAN_REFERENCE_FRAME_TOOL)
 
             success &= self.all_notifs_succeeded
 
