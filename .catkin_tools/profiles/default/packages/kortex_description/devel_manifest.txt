@@ -1,0 +1,5 @@
+ros_kortex/kortex_description
+/home/oviya/ws23-door-opening/devel/.private/kortex_description/cmake.lock /home/oviya/ws23-door-opening/devel/./cmake.lock
+/home/oviya/ws23-door-opening/devel/.private/kortex_description/lib/pkgconfig/kortex_description.pc /home/oviya/ws23-door-opening/devel/lib/pkgconfig/kortex_description.pc
+/home/oviya/ws23-door-opening/devel/.private/kortex_description/share/kortex_description/cmake/kortex_descriptionConfig-version.cmake /home/oviya/ws23-door-opening/devel/share/kortex_description/cmake/kortex_descriptionConfig-version.cmake
+/home/oviya/ws23-door-opening/devel/.private/kortex_description/share/kortex_description/cmake/kortex_descriptionConfig.cmake /home/oviya/ws23-door-opening/devel/share/kortex_description/cmake/kortex_descriptionConfig.cmake

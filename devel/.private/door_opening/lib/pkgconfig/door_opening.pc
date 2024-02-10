@@ -1,0 +1,8 @@
+prefix=/home/oviya/ws23-door-opening/devel/.private/door_opening
+
+Name: door_opening
+Description: Description of door_opening
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

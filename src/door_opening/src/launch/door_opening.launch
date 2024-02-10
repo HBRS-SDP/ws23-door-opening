@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <arg name="robot_name" default="my_gen3"/>
+    <node pkg="door_opening" type="open_door.py" name="door_opening" output="screen">
+    </node>
+</launch>

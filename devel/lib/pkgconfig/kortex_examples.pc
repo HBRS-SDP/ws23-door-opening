@@ -1,0 +1,1 @@
+/home/oviya/ws23-door-opening/devel/.private/kortex_examples/lib/pkgconfig/kortex_examples.pc
