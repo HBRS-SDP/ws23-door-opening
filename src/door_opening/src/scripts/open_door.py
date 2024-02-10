@@ -54,6 +54,10 @@ class DoorOpening:
             self.action_topic_sub = rospy.Subscriber("/" + self.robot_name + "/action_topic", ActionNotification, self.cb_action_topic)
             self.last_action_notif_type = None
 
+            #Init publishers
+            # cartesian velocity publislher
+            self.cartesian_velocity_pub = rospy.Publisher('/my_gen3/in/cartesian_velocity', TwistCommand, queue_size=1)
+
 
             # Init the services
             clear_faults_full_name = '/' + self.robot_name + '/base/clear_faults'
@@ -250,7 +254,7 @@ class DoorOpening:
 
             # Let's close the gripper at 50%
             if self.is_gripper_present:
-                success &= self.gripper_command(1.0)
+                self.gripper_command(1.0)
                 time.sleep(0.5)
             else:
                 rospy.logwarn("No gripper is present on the arm.") 
@@ -277,10 +281,54 @@ class DoorOpening:
             open_door_pose.target_pose.theta_z = 160.227
 
             self.move_to_cartesian_pose(open_door_pose,0.5,15)
+
         except:
             return False
-
+        
         return True
+
+
+    def move_with_velocity(self, distance, time, direction, velocity=None, ref_frame=CartesianReferenceFrame.CARTESIAN_REFERENCE_FRAME_TOOL):
+            """
+            Move the arm with velocity in a given direction
+
+            distance: distance to move in m
+            time: time to move in s
+            direction: direction to move in ('x', 'y', 'z')
+            velocity: velocity to move in m/s (overrides distance and time)
+            ref_frame: reference frame to move in (Tool, Base): default is Tool
+            """
+
+            if velocity is None:
+                velocity = distance/time
+
+            # create twist command 
+            approach_twist = TwistCommand()
+            approach_twist.reference_frame = ref_frame
+            if direction == 'x':
+                approach_twist.twist.linear_x = velocity
+            elif direction == 'y':
+                approach_twist.twist.linear_y = velocity
+            elif direction == 'z':
+                approach_twist.twist.linear_z = velocity+0.01
+                approach_twist.twist.linear_y = -velocity
+
+            self.cartesian_velocity_pub.publish(approach_twist)
+            rospy.sleep(time)
+            self.stop_arm_velocity()
+
+            return True
+    
+    def stop_arm_velocity(self):
+        """
+        Stop arm by sending zero velocity
+        """
+
+        velocity_vector = TwistCommand()
+        velocity_vector.reference_frame = CartesianReferenceFrame.CARTESIAN_REFERENCE_FRAME_MIXED # for proper joypad control
+        self.cartesian_velocity_pub.publish(velocity_vector)
+        return True
+        
     
 
 
@@ -339,45 +387,49 @@ class DoorOpening:
 
             # success &=self.move_to_cartesian_pose(my_constrained_pose,0.5,15)
             # print("start")
-            towards_door_pose = ConstrainedPose()
-            towards_door_pose.target_pose.x = 0.464
-            towards_door_pose.target_pose.y = 0.742
-            towards_door_pose.target_pose.z = 0.725
-            towards_door_pose.target_pose.theta_x = 55.533
-            towards_door_pose.target_pose.theta_y = -7.979
-            towards_door_pose.target_pose.theta_z = 157.812
+            # towards_door_pose = ConstrainedPose()
+            # towards_door_pose.target_pose.x = 0.464
+            # towards_door_pose.target_pose.y = 0.742
+            # towards_door_pose.target_pose.z = 0.725
+            # towards_door_pose.target_pose.theta_x = 55.533
+            # towards_door_pose.target_pose.theta_y = -7.979
+            # towards_door_pose.target_pose.theta_z = 157.812
 
-            success &=self.move_to_cartesian_pose(towards_door_pose,0.5,15)
+            # success &=self.move_to_cartesian_pose(towards_door_pose,0.5,15)
 
-            # Let's close the gripper at 50%
-            if self.is_gripper_present:
-                success &= self.gripper_command(1.0)
-                time.sleep(0.5)
-            else:
-                rospy.logwarn("No gripper is present on the arm.") 
+            # # Let's close the gripper at 50%
+            # if self.is_gripper_present:
+            #     success &= self.gripper_command(1.0)
+            #     time.sleep(0.5)
+            # else:
+            #     rospy.logwarn("No gripper is present on the arm.") 
 
-            #unlatch the door
+            # #unlatch the door
             
-            unlatch_door = ConstrainedPose()
-            unlatch_door.target_pose.x = 0.454
-            unlatch_door.target_pose.y = 0.748
-            unlatch_door.target_pose.z = 0.726
-            unlatch_door.target_pose.theta_x = 55.547
-            unlatch_door.target_pose.theta_y = -5.892
-            unlatch_door.target_pose.theta_z = 156.254
+            # unlatch_door = ConstrainedPose()
+            # unlatch_door.target_pose.x = 0.454
+            # unlatch_door.target_pose.y = 0.748
+            # unlatch_door.target_pose.z = 0.726
+            # unlatch_door.target_pose.theta_x = 55.547
+            # unlatch_door.target_pose.theta_y = -5.892
+            # unlatch_door.target_pose.theta_z = 156.254
 
-            success &=self.move_to_cartesian_pose(unlatch_door,0.5,15)
+            # success &=self.move_to_cartesian_pose(unlatch_door,0.5,15)
                 
 
-            open_door_pose = ConstrainedPose()
-            open_door_pose.target_pose.x = 0.383
-            open_door_pose.target_pose.y = 0.527
-            open_door_pose.target_pose.z = 0.51
-            open_door_pose.target_pose.theta_x = 55.547
-            open_door_pose.target_pose.theta_y = -5.892
-            open_door_pose.target_pose.theta_z = 156.254
+            # open_door_pose = ConstrainedPose()
+            # open_door_pose.target_pose.x = 0.383
+            # open_door_pose.target_pose.y = 0.527
+            # open_door_pose.target_pose.z = 0.51
+            # open_door_pose.target_pose.theta_x = 55.547
+            # open_door_pose.target_pose.theta_y = -5.892
+            # open_door_pose.target_pose.theta_z = 156.254
             
-            success &=self.move_to_cartesian_pose(open_door_pose,0.5,15)
+            # success &=self.move_to_cartesian_pose(open_door_pose,0.5,15)
+
+            # success &=self.open_door_clockwise()
+
+            success &=self.move_with_velocity(0.5, 10, "z", velocity=None, ref_frame=CartesianReferenceFrame.CARTESIAN_REFERENCE_FRAME_TOOL)
 
             success &= self.all_notifs_succeeded
 
