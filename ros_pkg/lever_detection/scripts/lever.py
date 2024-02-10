@@ -7,13 +7,16 @@ from sensor_msgs.msg import Image, PointCloud2
 from geometry_msgs.msg import PoseStamped, Point, Quaternion
 import open3d as o3d
 from std_msgs.msg import Header
+import tf2_ros
+import tf2_geometry_msgs
 import sys
 print(sys.path)
 import sys
-sys.path.append('/home/zainey/ros_ws/src/lever_detection/scripts')
+sys.path.append('/home/maira/catkin_ws/src/lever_detection/scripts')
 
 # import coordetector
 from coordetector import t2d2t3d
+
 
 class LeverDetector:
     def __init__(self):
@@ -31,6 +34,8 @@ class LeverDetector:
         self.cv_image = None
         self.cloud_data = None
         self.td23D = t2d2t3d()
+       
+        self.tfbuffer_ = tf2_ros.Buffer()
 
     def image_callback(self, data):
         try:
@@ -104,16 +109,17 @@ class LeverDetector:
                 print(obj_pose)
                 print("-------------------------------")
 
-                real_object_head = self.mover.transform_3D2head([obj_pose])[0]
+                real_object_head = self.transform_3D2head([obj_pose])[0]
                 print("-----------real_object_head-------------------")
                 print(real_object_head)
                 print("-------------------------------")
                 #real_object_pose = self.mover.transform_head2map([real_object_head])[0]
-                real_object_pose = self.mover.transform_head2base([real_object_head])[0]
+                real_object_pose = self.transform_head2base([real_object_head])[0]
                 print("-----------real_object_pose-------------------")
                 print(real_object_pose)
                 print("-------------------------------")
-                final_pose = real_object_pose
+                # final_pose = real_object_pose ## use this one for realtime working
+                final_pose = real_object_head ## this is for test only
                 break
             except Exception as e:
                 print(e)
@@ -123,6 +129,11 @@ class LeverDetector:
             return 'failed'
 
         print(real_object_head)
+    def show_point(self, point, col=[1,1,1]):
+            pcd = o3d.geometry.PointCloud()
+            pcd.points = o3d.utility.Vector3dVector([point])
+            pcd.colors = o3d.utility.Vector3dVector([np.array(col)])
+            return pcd
 
     def calculate_3d_pose(self, detection_row):
         # Placeholder for conversion from 2D detection to 3D pose
@@ -140,7 +151,7 @@ class LeverDetector:
         pose_msg = PoseStamped()
         pose_msg.header = Header()
         pose_msg.header.stamp = rospy.Time.now()
-        pose_msg.header.frame_id = "base_link"  # Assuming the pose is in the robot's base frame
+        pose_msg.header.frame_id = "BASE"  # Assuming the pose is in the robot's base frame
         pose_msg.pose.position = Point(pose_3d[0], pose_3d[1], pose_3d[2])
         pose_msg.pose.orientation = Quaternion(0, 0, 0, 1)  # No orientation information for now
         self.pose_pub.publish(pose_msg)
@@ -158,6 +169,33 @@ class LeverDetector:
             #print(self.cv_image)
         except ValueError as e:
             print(e)
+
+    def transform_3D2head(self,obj_poses):
+        transformed = []
+        for obj_pose in obj_poses:
+            x,y,z = obj_pose.pose.position.x, obj_pose.pose.position.y, obj_pose.pose.position.z
+            obj_pose.header.frame_id = "camera_link"
+            obj_pose.pose.position.x = y #headx=3dy
+            obj_pose.pose.position.y = z #heady=-3dz
+            obj_pose.pose.position.z = x #headz=3dx
+            transformed.append(obj_pose)
+        return transformed
+    # def transform_head2map(self,obj_poses):
+    #     transformed = []
+    #     for obj_pose in obj_poses:
+    #         transformation = self.tfbuffer_.lookup_transform('map', "head_rgbd_sensor_rgb_frame", rospy.Time())
+    #         transformed_pose = tf2_geometry_msgs.do_transform_pose(obj_pose, transformation)
+    #         transformed.append(transformed_pose)
+    #     return transformed
+
+    def transform_head2base(self,obj_poses):
+        transformed = []
+        for obj_pose in obj_poses:
+            transformation = self.tfbuffer_.lookup_transform('BASE', "camera_link", rospy.Time())
+            transformed_pose = tf2_geometry_msgs.do_transform_pose(obj_pose, transformation)
+            transformed.append(transformed_pose)
+        return transformed
+
 
 if __name__ == '__main__':
     detector = LeverDetector()
