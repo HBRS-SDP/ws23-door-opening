@@ -1,0 +1,1 @@
+/home/oviya/ws23-door-opening/devel/.private/lever_detection/share/lever_detection/cmake/lever_detectionConfig.cmake
