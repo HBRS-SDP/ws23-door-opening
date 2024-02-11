@@ -26,7 +26,7 @@ import numpy as np
 class DoorOpening:
     def __init__(self):
         try:
-            rospy.init_node('door_opening')
+            rospy.init_node('force_transformation')
 
             self.HOME_ACTION_IDENTIFIER = 2
 
