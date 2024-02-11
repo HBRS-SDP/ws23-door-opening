@@ -2,15 +2,15 @@
 
 |**Ubuntu Distribution**|Ubuntu 20.04 - Focal Fossa|
 |---|---|
-|**ROS1 Distribution**| noetic|
+|ROS1 Distribution| noetic|
 
 ## Overview
 This repository provides scripts to open a door with a Kinova arm Gen3 with 7 DoF usign the Vision module to obtain the coordinates of the door's handle.
 
 ## Required clone repo
-'''
+```
 git clone git@github.com:HBRS-SDP/ws23-door-opening.git
-'''
+```
 
 ### ros_kortex
 - Refer to the [Github ros_kortex repo](https://github.com/Kinovarobotics/ros_kortex) to get information about the packages to interact with Kortex
