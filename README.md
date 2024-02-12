@@ -26,7 +26,7 @@ git@github.com:Kinovarobotics/ros_kortex_vision.git
 ### Kinova arm connection
 1. Turn the Kinova arm on
 2. Connect the pc with cable ethernet
-3. Make sure that the IP from your computer is in the same network as the arm's IP
+3. Make sure that the IP from your computer is connected to the same network as the arm
 > [!TIP]
 > Type the Kinova arm IP in your browser to check if your connection was successful
 
@@ -53,7 +53,6 @@ catkin build
 4. Launch the following files for arm movement:
 ```
 roslaunch kortex_driver kortex_driver.launch
-roslaunch 
 ```
 5. Launch the following files for initializing the kinova_vision node:
 ```
@@ -65,4 +64,18 @@ rosrun rviz rviz
 Subscribe to the following topics:
 - /camera/color/image_raw
 - /camera/depth_registered/points
+
+### Visualize force plot
+1. Install PlotJuggler
+```
+rosrun plotjuggler plotjuggler
+```
+2. Launch it with the command
+```
+rosrun plotjuggler plotjuggler
+```
+3. Under the `Streaming` tab select `ROS topic Subscriber`
+4. Grab the topics you want to visualize to the tab in the right
+> [!TIP]
+> For more information of how to use PlotJuggler, visit [PlotJuggler](https://github.com/facontidavide/PlotJuggler)
 
