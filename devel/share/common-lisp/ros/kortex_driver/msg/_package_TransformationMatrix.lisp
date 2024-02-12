@@ -1,1 +1,10 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_TransformationMatrix.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(R0-VAL
+          R0
+          R1-VAL
+          R1
+          R2-VAL
+          R2
+          R3-VAL
+          R3
+))

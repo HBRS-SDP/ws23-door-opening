@@ -1,1 +1,8 @@
-/home/oviya/ws23-door-opening/devel/.private/door_opening/lib/pkgconfig/door_opening.pc
+prefix=/home/maira/catkin_ws/ws23-door-opening/devel
+
+Name: door_opening
+Description: Description of door_opening
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

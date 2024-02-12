@@ -1,1 +1,8 @@
-/home/oviya/ws23-door-opening/devel/.private/gen3_lite_gen3_lite_2f_move_it_config/lib/pkgconfig/gen3_lite_gen3_lite_2f_move_it_config.pc
+prefix=/home/maira/catkin_ws/ws23-door-opening/devel
+
+Name: gen3_lite_gen3_lite_2f_move_it_config
+Description: Description of gen3_lite_gen3_lite_2f_move_it_config
+Version: 2.2.2
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

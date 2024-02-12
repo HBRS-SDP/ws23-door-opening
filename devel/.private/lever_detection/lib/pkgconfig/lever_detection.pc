@@ -1,8 +1,0 @@
-prefix=/home/oviya/ws23-door-opening/devel/.private/lever_detection
-
-Name: lever_detection
-Description: Description of lever_detection
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

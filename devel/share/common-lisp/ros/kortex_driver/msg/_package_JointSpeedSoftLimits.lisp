@@ -1,1 +1,6 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_JointSpeedSoftLimits.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(CONTROL_MODE-VAL
+          CONTROL_MODE
+          JOINT_SPEED_SOFT_LIMITS-VAL
+          JOINT_SPEED_SOFT_LIMITS
+))

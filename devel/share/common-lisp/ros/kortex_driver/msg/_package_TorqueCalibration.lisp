@@ -1,1 +1,10 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_TorqueCalibration.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(GLOBAL_GAIN-VAL
+          GLOBAL_GAIN
+          GLOBAL_OFFSET-VAL
+          GLOBAL_OFFSET
+          GAIN-VAL
+          GAIN
+          OFFSET-VAL
+          OFFSET
+))

@@ -1,1 +1,14 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_ControlLoopParameters.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(LOOP_SELECTION-VAL
+          LOOP_SELECTION
+          ERROR_SATURATION-VAL
+          ERROR_SATURATION
+          OUTPUT_SATURATION-VAL
+          OUTPUT_SATURATION
+          KAZ-VAL
+          KAZ
+          KBZ-VAL
+          KBZ
+          ERROR_DEAD_BAND-VAL
+          ERROR_DEAD_BAND
+))

@@ -1,1 +1,6 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_Waypoint.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(NAME-VAL
+          NAME
+          ONEOF_TYPE_OF_WAYPOINT-VAL
+          ONEOF_TYPE_OF_WAYPOINT
+))

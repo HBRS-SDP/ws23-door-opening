@@ -1,1 +1,6 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_FocusPoint.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(X-VAL
+          X
+          Y-VAL
+          Y
+))

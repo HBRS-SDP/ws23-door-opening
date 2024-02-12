@@ -1,1 +1,10 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_MotorCommand.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(MOTOR_ID-VAL
+          MOTOR_ID
+          POSITION-VAL
+          POSITION
+          VELOCITY-VAL
+          VELOCITY
+          FORCE-VAL
+          FORCE
+))

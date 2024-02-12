@@ -1,1 +1,14 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_SystemTime.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(SEC-VAL
+          SEC
+          MIN-VAL
+          MIN
+          HOUR-VAL
+          HOUR
+          MDAY-VAL
+          MDAY
+          MON-VAL
+          MON
+          YEAR-VAL
+          YEAR
+))

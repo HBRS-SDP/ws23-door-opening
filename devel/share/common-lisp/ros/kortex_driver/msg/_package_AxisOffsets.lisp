@@ -1,1 +1,6 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_AxisOffsets.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(ABSOLUTE_OFFSET-VAL
+          ABSOLUTE_OFFSET
+          RELATIVE_OFFSET-VAL
+          RELATIVE_OFFSET
+))

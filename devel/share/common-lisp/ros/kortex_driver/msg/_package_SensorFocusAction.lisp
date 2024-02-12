@@ -1,1 +1,8 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_SensorFocusAction.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(SENSOR-VAL
+          SENSOR
+          FOCUS_ACTION-VAL
+          FOCUS_ACTION
+          ONEOF_ACTION_PARAMETERS-VAL
+          ONEOF_ACTION_PARAMETERS
+))

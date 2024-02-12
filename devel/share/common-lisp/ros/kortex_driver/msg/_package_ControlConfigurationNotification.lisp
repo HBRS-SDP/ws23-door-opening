@@ -1,1 +1,10 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_ControlConfigurationNotification.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(EVENT-VAL
+          EVENT
+          TIMESTAMP-VAL
+          TIMESTAMP
+          USER_HANDLE-VAL
+          USER_HANDLE
+          CONNECTION-VAL
+          CONNECTION
+))

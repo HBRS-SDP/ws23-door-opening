@@ -1,1 +1,8 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_NotificationOptions.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(TYPE-VAL
+          TYPE
+          RATE_M_SEC-VAL
+          RATE_M_SEC
+          THRESHOLD_VALUE-VAL
+          THRESHOLD_VALUE
+))

@@ -1,1 +1,10 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_SensorSettings.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(SENSOR-VAL
+          SENSOR
+          RESOLUTION-VAL
+          RESOLUTION
+          FRAME_RATE-VAL
+          FRAME_RATE
+          BIT_RATE-VAL
+          BIT_RATE
+))

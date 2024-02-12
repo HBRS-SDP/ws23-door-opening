@@ -1,1 +1,16 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_MapGroup.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(GROUP_HANDLE-VAL
+          GROUP_HANDLE
+          NAME-VAL
+          NAME
+          RELATED_MAPPING_HANDLE-VAL
+          RELATED_MAPPING_HANDLE
+          PARENT_GROUP_HANDLE-VAL
+          PARENT_GROUP_HANDLE
+          CHILDREN_MAP_GROUP_HANDLES-VAL
+          CHILDREN_MAP_GROUP_HANDLES
+          MAP_HANDLES-VAL
+          MAP_HANDLES
+          APPLICATION_DATA-VAL
+          APPLICATION_DATA
+))

@@ -1,1 +1,10 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_InterconnectConfig_GPIOConfiguration.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(IDENTIFIER-VAL
+          IDENTIFIER
+          MODE-VAL
+          MODE
+          PULL-VAL
+          PULL
+          DEFAULT_VALUE-VAL
+          DEFAULT_VALUE
+))

@@ -1,1 +1,10 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_StepResponse.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(LOOP_SELECTION-VAL
+          LOOP_SELECTION
+          AMPLITUDE-VAL
+          AMPLITUDE
+          STEP_DELAY-VAL
+          STEP_DELAY
+          DURATION-VAL
+          DURATION
+))

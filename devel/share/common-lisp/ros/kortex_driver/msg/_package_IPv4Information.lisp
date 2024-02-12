@@ -1,1 +1,8 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_IPv4Information.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(IP_ADDRESS-VAL
+          IP_ADDRESS
+          SUBNET_MASK-VAL
+          SUBNET_MASK
+          DEFAULT_GATEWAY-VAL
+          DEFAULT_GATEWAY
+))

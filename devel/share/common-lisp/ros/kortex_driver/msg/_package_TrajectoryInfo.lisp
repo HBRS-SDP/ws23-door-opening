@@ -1,1 +1,8 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_TrajectoryInfo.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(TRAJECTORY_INFO_TYPE-VAL
+          TRAJECTORY_INFO_TYPE
+          WAYPOINT_INDEX-VAL
+          WAYPOINT_INDEX
+          JOINT_INDEX-VAL
+          JOINT_INDEX
+))
