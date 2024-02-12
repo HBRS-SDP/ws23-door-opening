@@ -21,6 +21,7 @@ import kortex_driver
 from kortex_driver.srv import *
 from kortex_driver.msg import *
 import numpy as np
+import math
 
 
 class DoorOpening:
@@ -40,7 +41,7 @@ class DoorOpening:
 
             self.door_configuration = "push"
 
-            # Get node params
+            #Get node params
             self.robot_name = rospy.get_param('~robot_name', "my_gen3")
             self.degrees_of_freedom = rospy.get_param("/" + self.robot_name + "/degrees_of_freedom", 7)
             self.is_gripper_present = rospy.get_param("/" + self.robot_name + "/is_gripper_present", False)
@@ -55,8 +56,10 @@ class DoorOpening:
             self._force_subscriber = rospy.Subscriber("/my_gen3/base_feedback", kortex_driver.msg.BaseCyclic_Feedback, self._force_callback)
             self.action_topic_sub = rospy.Subscriber("/" + self.robot_name + "/action_topic", ActionNotification, self.cb_action_topic)
             self.last_action_notif_type = None
-            self.pose_subscriber = rospy.Subscriber('lever_pose',  PoseStamped, self.pose_conversion_callback)
+            print("Works1")
+            self.pose_subscriber = rospy.Subscriber('/lever_pose',  PoseStamped, self.pose_conversion_callback)
             self.pose = tuple()
+            print("check")
 
             #Init publishers
             # cartesian velocity publislher
@@ -93,10 +96,12 @@ class DoorOpening:
             self.is_init_success = True
 
 
-    def pose_conversion_callback(self, pose_msg):
-        self.pose = self.get_kinovapose_from_pose_stamped(pose_msg)
+    def pose_conversion_callback(self,pose_msg):
+        print(pose_msg)
+        self.pose = self.get_kinovapose_from_pose_stamped(pose_msg)  
+        print(self.pose)
 
-    def get_kinovapose_from_pose_stamped(pose: PoseStamped):
+    def get_kinovapose_from_pose_stamped(self,pose: PoseStamped):
         '''
         Converts a PoseStamped message to a KinovaPose.
 
@@ -117,11 +122,11 @@ class DoorOpening:
         theta_y_deg = math.degrees(euler[1])
         theta_z_deg = math.degrees(euler[2])
 
-        return tuple(pose.pose.position.x, pose.pose.position.y, pose.pose.position.z, theta_x_deg, theta_y_deg, theta_z_deg)
+        return tuple((pose.pose.position.x, pose.pose.position.y, pose.pose.position.z, theta_x_deg, theta_y_deg, theta_z_deg))
 
 
     def _force_callback(self, msg):
-        self.average_threshold=15
+        self.average_threshold=25
         self.data_size_limit = 10
         self._force['x'].append(abs(msg.base.tool_external_wrench_force_x))
         self._force['y'].append(abs(msg.base.tool_external_wrench_force_y))
@@ -129,23 +134,6 @@ class DoorOpening:
         self._force['t_x'].append(abs(msg.base.tool_external_wrench_torque_x))
         self._force['t_y'].append(abs(msg.base.tool_external_wrench_torque_y))
         self._force['t_z'].append(abs(msg.base.tool_external_wrench_torque_z))
-        # self.checker=self._force['z']
-        # if len(self.checker) >20:
-        #     val=np.average(self.checker)
-        #     print("Average",val)
-        #     if abs(val) >10:
-        #         print("high force")
-        #         self.checker=[]
-        #         print(len(self.checker))
-        #     else:
-        #         print("normal force")
-        #         self.checker=[]
-        #         print(len(self.checker))   
-         
-        # self.force_data['x'].append(force_x)
-        # self.force_data['y'].append(force_y)
-        # self.force_data['z'].append(force_z)
-
         # Keep only the last 10 elements in each list
         for axis in self._force:
             self._force[axis] = self._force[axis][-self.data_size_limit:]
@@ -273,53 +261,53 @@ class DoorOpening:
 
         return True
     
-    def open_door_clockwise(self):
-        try:
+    # def open_door_clockwise(self):
+    #     try:
 
-            towards_door_pose = ConstrainedPose()
-            towards_door_pose.target_pose.x = 0.454
-            towards_door_pose.target_pose.y = 0.776
-            towards_door_pose.target_pose.z = 0.661
-            towards_door_pose.target_pose.theta_x = 55.529
-            towards_door_pose.target_pose.theta_y = -14.266
-            towards_door_pose.target_pose.theta_z = 165.524
+    #         towards_door_pose = ConstrainedPose()
+    #         towards_door_pose.target_pose.x = 0.454
+    #         towards_door_pose.target_pose.y = 0.776
+    #         towards_door_pose.target_pose.z = 0.661
+    #         towards_door_pose.target_pose.theta_x = 55.529
+    #         towards_door_pose.target_pose.theta_y = -14.266
+    #         towards_door_pose.target_pose.theta_z = 165.524
 
-            self.move_to_cartesian_pose(towards_door_pose,0.5,15)
+    #         self.move_to_cartesian_pose(towards_door_pose,0.5,15)
 
-            # Let's close the gripper at 50%
-            if self.is_gripper_present:
-                self.gripper_command(1.0)
-                time.sleep(0.5)
-            else:
-                rospy.logwarn("No gripper is present on the arm.") 
+    #         # Let's close the gripper at 50%
+    #         if self.is_gripper_present:
+    #             self.gripper_command(1.0)
+    #             time.sleep(0.5)
+    #         else:
+    #             rospy.logwarn("No gripper is present on the arm.") 
 
-            #unlatch the door
+    #         #unlatch the door
             
-            unlatch_door = ConstrainedPose()
-            unlatch_door.target_pose.x = 0.419
-            unlatch_door.target_pose.y = 0.788
-            unlatch_door.target_pose.z = 0.664
-            unlatch_door.target_pose.theta_x = 58.568
-            unlatch_door.target_pose.theta_y = -8.615
-            unlatch_door.target_pose.theta_z = 158.7
+    #         unlatch_door = ConstrainedPose()
+    #         unlatch_door.target_pose.x = 0.419
+    #         unlatch_door.target_pose.y = 0.788
+    #         unlatch_door.target_pose.z = 0.664
+    #         unlatch_door.target_pose.theta_x = 58.568
+    #         unlatch_door.target_pose.theta_y = -8.615
+    #         unlatch_door.target_pose.theta_z = 158.7
 
-            self.move_to_cartesian_pose(unlatch_door,0.5,15)
+    #         self.move_to_cartesian_pose(unlatch_door,0.5,15)
                 
 
-            open_door_pose = ConstrainedPose()
-            open_door_pose.target_pose.x = 0.383
-            open_door_pose.target_pose.y = 0.527
-            open_door_pose.target_pose.z = 0.51
-            open_door_pose.target_pose.theta_x = 36.967
-            open_door_pose.target_pose.theta_y = -3.882
-            open_door_pose.target_pose.theta_z = 160.227
+    #         open_door_pose = ConstrainedPose()
+    #         open_door_pose.target_pose.x = 0.383
+    #         open_door_pose.target_pose.y = 0.527
+    #         open_door_pose.target_pose.z = 0.51
+    #         open_door_pose.target_pose.theta_x = 36.967
+    #         open_door_pose.target_pose.theta_y = -3.882
+    #         open_door_pose.target_pose.theta_z = 160.227
 
-            self.move_to_cartesian_pose(open_door_pose,0.5,15)
+    #         self.move_to_cartesian_pose(open_door_pose,0.5,15)
 
-        except:
-            return False
+    #     except:
+    #         return False
         
-        return True
+    #     return True
 
 
     def move_with_velocity(self, distance, time, direction, velocity=None, ref_frame=CartesianReferenceFrame.CARTESIAN_REFERENCE_FRAME_TOOL):
@@ -375,15 +363,59 @@ class DoorOpening:
         self.move_to_cartesian_pose(home_position,0.5,15)
     
     def get_co_ordinate(self):
+        self.value=self.pose
         self.co_ordinate=ConstrainedPose()
-        self.co_ordinate.target_pose.x = 0.373
-        self.co_ordinate.target_pose.y = 0.469
-        self.co_ordinate.target_pose.z = 0.64
-        self.co_ordinate.target_pose.theta_x = 176.746
-        self.co_ordinate.target_pose.theta_y = -147.887
-        self.co_ordinate.target_pose.theta_z = 92
+        self.co_ordinate.target_pose.x = self.value[0]
+        self.co_ordinate.target_pose.y = self.value[1]
+        self.co_ordinate.target_pose.z = self.value[2]
+        self.co_ordinate.target_pose.theta_x = 55.533
+        self.co_ordinate.target_pose.theta_y = -7.979
+        self.co_ordinate.target_pose.theta_z = 157.812
 
         return self.co_ordinate
+    
+
+    def base_movement(self):
+        responce=input("Move the base to the required pose type(yes/no)")
+
+        if responce=="yes":
+            return True
+        elif responce=="no":
+            return False
+        else:
+            return False
+        
+    def move_to_pull_home_pose(self):
+        self.co_ordinate=ConstrainedPose()
+        self.co_ordinate.target_pose.x = 0
+        self.co_ordinate.target_pose.y = 0
+        self.co_ordinate.target_pose.z = 0
+        self.co_ordinate.target_pose.theta_x = 0
+        self.co_ordinate.target_pose.theta_y = 0
+        self.co_ordinate.target_pose.theta_z = 0
+        return self.co_ordinate
+    
+    def move_to_push_home_pose(self):
+        self.co_ordinate=ConstrainedPose()
+        self.co_ordinate.target_pose.x = 0
+        self.co_ordinate.target_pose.y = 0
+        self.co_ordinate.target_pose.z = 0
+        self.co_ordinate.target_pose.theta_x = 0
+        self.co_ordinate.target_pose.theta_y = 0
+        self.co_ordinate.target_pose.theta_z = 0
+        return self.co_ordinate
+
+    def unlatch_pose(self,current_co_ordinate):
+        self.unlatch_co_ordinates=ConstrainedPose()
+        self.unlatch_co_ordinates.target_pose.x = current_co_ordinate.target_pose.x-0
+        self.unlatch_co_ordinates.target_pose.y = current_co_ordinate.target_pose.y-0
+        self.unlatch_co_ordinates.target_pose.z = current_co_ordinate.target_pose.z-0
+        self.unlatch_co_ordinates.target_pose.theta_x = current_co_ordinate.target_pose.theta_x
+        self.unlatch_co_ordinates.target_pose.theta_y = current_co_ordinate.target_pose.theta_y
+        self.unlatch_co_ordinates.target_pose.theta_z = current_co_ordinate.target_pose.theta_z
+
+        return self.unlatch_co_ordinates
+
 
     def main(self):
         # For testing purposes
@@ -411,31 +443,78 @@ class DoorOpening:
 
             #*******************************************************************************
 
-            success &=self.move_to_home_pose(self)
-            # handel_pose=self.get_co_ordinate(self)
-            # success &=self.move_to_cartesian_pose(handel_pose,1.5,15)
+            success &=self.move_to_home_pose()
+            open_handel_pose=self.get_co_ordinate()
+            success &=self.move_to_cartesian_pose(open_handel_pose,1.5,15)
+            #close the gripper
+            if self.is_gripper_present:
+                success &= self.example_send_gripper_command(1.0)
+                time.sleep(0.5)
+            else:
+                rospy.logwarn("No gripper is present on the arm.")  
+            open_unlatch_pose=self.unlatch_pose(open_handel_pose)
+            success &=self.move_to_cartesian_pose(open_unlatch_pose,1.5,15)
 
-            # moving_time =  10
-            # initial_time = time.now()
-            # current_elapsed_time = time.now()
+            moving_time =  10
+            initial_time = time.now()
+            current_elapsed_time = time.now()
 
-            # self.move_with_velocity(distance = 0.5,moving_time = moving_time,direction="z")
-            # while(current_elapsed_time < moving_time):
-            #     current_elapsed_time = time.now() - initial_time
-            #     if self.door_configuration =="pull":
-            #         self.stop_velocity()
-            #         break
+            self.move_with_velocity(distance = 0.5,moving_time = moving_time,direction="z")
+            while(current_elapsed_time < moving_time):
+                current_elapsed_time = time.now() - initial_time
+                if self.door_configuration =="pull":
+                    self.stop_velocity()
+                    break
 
-            # self.stop_velocity()
+            self.stop_velocity()
+           
+        
 
-            print(self.pose)
+            if self.door_configuration =="pull":
+                success &=self.move_to_pull_home_pose()
+                #open the gripper
+                if self.is_gripper_present:
+                    success &= self.example_send_gripper_command(0.0)
+                else:
+                    rospy.logwarn("No gripper is present on the arm.")  
+                success &=self.base_movement()
+                print("Initializing close motions")
+                close_handel_pose=self.get_co_ordinate()
+                success &=self.move_to_cartesian_pose(close_handel_pose,1.5,15)
+                #close the gripper
+                if self.is_gripper_present:
+                    success &= self.example_send_gripper_command(1.0)
+                    time.sleep(0.5)
+                else:
+                    rospy.logwarn("No gripper is present on the arm.")  
+                close_unlatch_pose=self.unlatch_pose(close_handel_pose)
+                success &=self.move_to_cartesian_pose(close_unlatch_pose,1.5,15)
+                success &=self.move_to_pull_home_pose()
+                #open the gripper
+                if self.is_gripper_present:
+                    success &= self.example_send_gripper_command(0.0)
+                else:
+                    rospy.logwarn("No gripper is present on the arm.")  
 
-            # if self.door_configuration =="pull":
-            # success &=self.move_with_velocity(0.5, 10, "z", velocity=None, ref_frame=CartesianReferenceFrame.CARTESIAN_REFERENCE_FRAME_TOOL)
+            elif self.door_configuration =="push":
+                #open the gripper
+                if self.is_gripper_present:
+                    success &= self.example_send_gripper_command(0.0)
+                else:
+                    rospy.logwarn("No gripper is present on the arm.")  
+                success &=self.move_to_push_home_pose()
+                success &=self.base_movement()
+                print("Initializing close motions")
+                # close_handel_pose=self.get_co_ordinate()
+                # success &=self.move_to_cartesian_pose(close_handel_pose,1.5,15)
+                # close_unlatch_pose=self.unlatch_pose(close_handel_pose)
+                # success &=self.move_to_cartesian_pose(close_unlatch_pose,1.5,15)
+                success &=self.move_to_push_home_pose()
+                
 
             success &= self.all_notifs_succeeded
 
-            success &= self.all_notifs_succeeded
+            # success &= self.all_notifs_succeeded
 
 
         # For testing purposes
@@ -446,4 +525,8 @@ class DoorOpening:
 
 if __name__ == "__main__":
     ex = DoorOpening()
-    ex.main()
+    rate = rospy.Rate(10)  # 10 Hz
+    
+    while not rospy.is_shutdown():
+        ex.main()
+        rate.sleep()
