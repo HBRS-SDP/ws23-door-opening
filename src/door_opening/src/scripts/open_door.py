@@ -13,6 +13,7 @@
 
 import sys
 import rospy
+from rospy import ServiceException
 import time
 from geometry_msgs.msg import PoseStamped
 from tf.transformations import euler_from_quaternion
@@ -38,6 +39,8 @@ class DoorOpening:
             self.all_notifs_succeeded = True
 
             self.all_notifs_succeeded = True
+
+            self.flag=False
 
             self.door_configuration = "push"
 
@@ -97,6 +100,7 @@ class DoorOpening:
 
 
     def pose_conversion_callback(self,pose_msg):
+        self.flag=True
         print(pose_msg)
         self.pose = self.get_kinovapose_from_pose_stamped(pose_msg)  
         print(self.pose)
@@ -417,6 +421,13 @@ class DoorOpening:
         return self.unlatch_co_ordinates
 
 
+    def is_topic_publishing(self,topic_name, timeout=1.0):
+        try:
+            rospy.wait_for_message(topic_name, rospy.AnyMsg, timeout=timeout)
+            return True
+        except ServiceException:
+            return False
+
     def main(self):
         # For testing purposes
         success = self.is_init_success
@@ -444,6 +455,10 @@ class DoorOpening:
             #*******************************************************************************
 
             success &=self.move_to_home_pose()
+            flag=False
+            while(flag==False):
+                print("Waiting for pose from vision module")
+                flag=self.is_topic_publishing("/lever_pose", timeout=2.0)
             open_handel_pose=self.get_co_ordinate()
             success &=self.move_to_cartesian_pose(open_handel_pose,1.5,15)
             #close the gripper
@@ -479,7 +494,14 @@ class DoorOpening:
                     rospy.logwarn("No gripper is present on the arm.")  
                 success &=self.base_movement()
                 print("Initializing close motions")
+                
+                success &=self.move_to_pull_home_pose()
+
+                while(flag==False):
+                    print("Waiting for pose from vision module")
+                    flag=self.is_topic_publishing("/lever_pose", timeout=2.0)
                 close_handel_pose=self.get_co_ordinate()
+
                 success &=self.move_to_cartesian_pose(close_handel_pose,1.5,15)
                 #close the gripper
                 if self.is_gripper_present:
