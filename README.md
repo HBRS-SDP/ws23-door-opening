@@ -5,7 +5,7 @@
 |ROS1 Distribution| noetic|
 
 ## Overview
-This repository provides scripts to open a door with a Kinova arm Gen3 with 7 DoF usign the Vision module to obtain the coordinates of the door's handle.
+This repository provides scripts to open a door with a Kinova arm Gen3 with 7 DoF using the Vision module to obtain the coordinates of the door's handle.
 
 ## Required Clone Repo
 ```
