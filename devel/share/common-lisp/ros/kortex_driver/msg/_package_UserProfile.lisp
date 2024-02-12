@@ -1,1 +1,12 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_UserProfile.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(HANDLE-VAL
+          HANDLE
+          USERNAME-VAL
+          USERNAME
+          FIRSTNAME-VAL
+          FIRSTNAME
+          LASTNAME-VAL
+          LASTNAME
+          APPLICATION_DATA-VAL
+          APPLICATION_DATA
+))

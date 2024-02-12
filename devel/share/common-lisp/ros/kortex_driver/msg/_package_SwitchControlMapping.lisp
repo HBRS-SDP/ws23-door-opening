@@ -1,1 +1,8 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_SwitchControlMapping.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(CONTROLLER_IDENTIFIER-VAL
+          CONTROLLER_IDENTIFIER
+          MAP_GROUP_HANDLE-VAL
+          MAP_GROUP_HANDLE
+          MAP_HANDLE-VAL
+          MAP_HANDLE
+))

@@ -1,0 +1,8 @@
+prefix=/home/maira/catkin_ws/ws23-door-opening/devel
+
+Name: kortex_control
+Description: Description of kortex_control
+Version: 2.2.2
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

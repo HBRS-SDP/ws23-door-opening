@@ -1,1 +1,10 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_I2CWriteParameter.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(DEVICE-VAL
+          DEVICE
+          DEVICE_ADDRESS-VAL
+          DEVICE_ADDRESS
+          TIMEOUT-VAL
+          TIMEOUT
+          DATA-VAL
+          DATA
+))

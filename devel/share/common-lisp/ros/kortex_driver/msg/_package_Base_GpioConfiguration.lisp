@@ -1,1 +1,6 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_Base_GpioConfiguration.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(PORT_NUMBER-VAL
+          PORT_NUMBER
+          PIN_CONFIGURATIONS-VAL
+          PIN_CONFIGURATIONS
+))

@@ -1,1 +1,12 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_CartesianWaypoint.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(POSE-VAL
+          POSE
+          REFERENCE_FRAME-VAL
+          REFERENCE_FRAME
+          MAXIMUM_LINEAR_VELOCITY-VAL
+          MAXIMUM_LINEAR_VELOCITY
+          MAXIMUM_ANGULAR_VELOCITY-VAL
+          MAXIMUM_ANGULAR_VELOCITY
+          BLENDING_RADIUS-VAL
+          BLENDING_RADIUS
+))

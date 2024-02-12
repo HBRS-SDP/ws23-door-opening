@@ -1,1 +1,12 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_ZoneShape.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(SHAPE_TYPE-VAL
+          SHAPE_TYPE
+          ORIGIN-VAL
+          ORIGIN
+          ORIENTATION-VAL
+          ORIENTATION
+          DIMENSIONS-VAL
+          DIMENSIONS
+          ENVELOPE_THICKNESS-VAL
+          ENVELOPE_THICKNESS
+))

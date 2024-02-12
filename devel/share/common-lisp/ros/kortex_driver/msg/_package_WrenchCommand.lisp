@@ -1,1 +1,10 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_WrenchCommand.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(REFERENCE_FRAME-VAL
+          REFERENCE_FRAME
+          MODE-VAL
+          MODE
+          WRENCH-VAL
+          WRENCH
+          DURATION-VAL
+          DURATION
+))

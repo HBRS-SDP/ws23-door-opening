@@ -1,1 +1,4 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_PartNumberRevision.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(PART_NUMBER_REVISION-VAL
+          PART_NUMBER_REVISION
+))

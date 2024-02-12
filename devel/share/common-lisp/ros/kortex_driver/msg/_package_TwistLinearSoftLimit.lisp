@@ -1,1 +1,6 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_TwistLinearSoftLimit.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(CONTROL_MODE-VAL
+          CONTROL_MODE
+          TWIST_LINEAR_SOFT_LIMIT-VAL
+          TWIST_LINEAR_SOFT_LIMIT
+))

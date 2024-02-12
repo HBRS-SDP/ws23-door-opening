@@ -1,1 +1,6 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_ControllerNotification_state.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(CONTROLLER_STATE-VAL
+          CONTROLLER_STATE
+          CONTROLLER_ELEMENT-VAL
+          CONTROLLER_ELEMENT
+))

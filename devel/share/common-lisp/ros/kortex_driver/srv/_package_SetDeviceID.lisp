@@ -1,1 +1,4 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/srv/_package_SetDeviceID.lisp
+(cl:in-package kortex_driver-srv)
+(cl:export '(DEVICE_ID-VAL
+          DEVICE_ID
+))

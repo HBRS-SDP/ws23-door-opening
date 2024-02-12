@@ -1,1 +1,6 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_ControllerElementHandle.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(CONTROLLER_HANDLE-VAL
+          CONTROLLER_HANDLE
+          ONEOF_IDENTIFIER-VAL
+          ONEOF_IDENTIFIER
+))

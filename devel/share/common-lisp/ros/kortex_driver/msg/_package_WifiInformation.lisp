@@ -1,1 +1,16 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_WifiInformation.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(SSID-VAL
+          SSID
+          SECURITY_TYPE-VAL
+          SECURITY_TYPE
+          ENCRYPTION_TYPE-VAL
+          ENCRYPTION_TYPE
+          SIGNAL_QUALITY-VAL
+          SIGNAL_QUALITY
+          SIGNAL_STRENGTH-VAL
+          SIGNAL_STRENGTH
+          FREQUENCY-VAL
+          FREQUENCY
+          CHANNEL-VAL
+          CHANNEL
+))

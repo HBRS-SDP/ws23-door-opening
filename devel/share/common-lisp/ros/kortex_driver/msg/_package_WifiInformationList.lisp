@@ -1,1 +1,4 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_WifiInformationList.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(WIFI_INFORMATION_LIST-VAL
+          WIFI_INFORMATION_LIST
+))

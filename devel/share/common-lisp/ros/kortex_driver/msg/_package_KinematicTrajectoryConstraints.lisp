@@ -1,1 +1,8 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_KinematicTrajectoryConstraints.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(ANGULAR_VELOCITIES-VAL
+          ANGULAR_VELOCITIES
+          LINEAR_VELOCITY-VAL
+          LINEAR_VELOCITY
+          ANGULAR_VELOCITY-VAL
+          ANGULAR_VELOCITY
+))

@@ -1,1 +1,14 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_ActuatorCommand.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(COMMAND_ID-VAL
+          COMMAND_ID
+          FLAGS-VAL
+          FLAGS
+          POSITION-VAL
+          POSITION
+          VELOCITY-VAL
+          VELOCITY
+          TORQUE_JOINT-VAL
+          TORQUE_JOINT
+          CURRENT_MOTOR-VAL
+          CURRENT_MOTOR
+))

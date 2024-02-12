@@ -1,1 +1,8 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_Orientation.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(THETA_X-VAL
+          THETA_X
+          THETA_Y-VAL
+          THETA_Y
+          THETA_Z-VAL
+          THETA_Z
+))

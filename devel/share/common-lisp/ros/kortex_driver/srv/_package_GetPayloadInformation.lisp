@@ -1,1 +1,6 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/srv/_package_GetPayloadInformation.lisp
+(cl:in-package kortex_driver-srv)
+(cl:export '(INPUT-VAL
+          INPUT
+          OUTPUT-VAL
+          OUTPUT
+))

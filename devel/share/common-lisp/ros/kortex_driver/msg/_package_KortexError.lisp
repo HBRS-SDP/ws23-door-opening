@@ -1,1 +1,8 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_KortexError.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(DESCRIPTION-VAL
+          DESCRIPTION
+          CODE-VAL
+          CODE
+          SUBCODE-VAL
+          SUBCODE
+))

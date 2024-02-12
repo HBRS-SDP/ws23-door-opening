@@ -1,1 +1,4 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_InterconnectCyclic_Command_tool_command.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(GRIPPER_COMMAND-VAL
+          GRIPPER_COMMAND
+))
