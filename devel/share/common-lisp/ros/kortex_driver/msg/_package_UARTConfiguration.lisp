@@ -1,1 +1,14 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_UARTConfiguration.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(PORT_ID-VAL
+          PORT_ID
+          ENABLED-VAL
+          ENABLED
+          SPEED-VAL
+          SPEED
+          WORD_LENGTH-VAL
+          WORD_LENGTH
+          STOP_BITS-VAL
+          STOP_BITS
+          PARITY-VAL
+          PARITY
+))

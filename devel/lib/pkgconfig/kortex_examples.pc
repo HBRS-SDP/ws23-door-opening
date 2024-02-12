@@ -1,1 +1,8 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_examples/lib/pkgconfig/kortex_examples.pc
+prefix=/home/maira/catkin_ws/ws23-door-opening/devel
+
+Name: kortex_examples
+Description: Description of kortex_examples
+Version: 2.2.2
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

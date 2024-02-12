@@ -1,1 +1,8 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_BaseCyclic_Command.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(FRAME_ID-VAL
+          FRAME_ID
+          ACTUATORS-VAL
+          ACTUATORS
+          INTERCONNECT-VAL
+          INTERCONNECT
+))

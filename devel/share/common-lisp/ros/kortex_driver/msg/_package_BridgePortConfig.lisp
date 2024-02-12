@@ -1,1 +1,6 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_BridgePortConfig.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(TARGET_PORT-VAL
+          TARGET_PORT
+          OUT_PORT-VAL
+          OUT_PORT
+))

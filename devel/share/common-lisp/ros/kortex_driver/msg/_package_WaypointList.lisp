@@ -1,1 +1,8 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_WaypointList.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(WAYPOINTS-VAL
+          WAYPOINTS
+          DURATION-VAL
+          DURATION
+          USE_OPTIMAL_BLENDING-VAL
+          USE_OPTIMAL_BLENDING
+))

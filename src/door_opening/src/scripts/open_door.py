@@ -21,12 +21,13 @@ import kortex_driver
 from kortex_driver.srv import *
 from kortex_driver.msg import *
 import numpy as np
+import math
 
 
 class DoorOpening:
     def __init__(self):
         try:
-            rospy.init_node('door_opening')
+            rospy.init_node('force_transformation')
 
             self.HOME_ACTION_IDENTIFIER = 2
 
@@ -40,7 +41,7 @@ class DoorOpening:
 
             self.door_configuration = "push"
 
-            # Get node params
+            #Get node params
             self.robot_name = rospy.get_param('~robot_name', "my_gen3")
             self.degrees_of_freedom = rospy.get_param("/" + self.robot_name + "/degrees_of_freedom", 7)
             self.is_gripper_present = rospy.get_param("/" + self.robot_name + "/is_gripper_present", False)
@@ -55,48 +56,52 @@ class DoorOpening:
             self._force_subscriber = rospy.Subscriber("/my_gen3/base_feedback", kortex_driver.msg.BaseCyclic_Feedback, self._force_callback)
             self.action_topic_sub = rospy.Subscriber("/" + self.robot_name + "/action_topic", ActionNotification, self.cb_action_topic)
             self.last_action_notif_type = None
-            self.pose_subscriber = rospy.Subscriber('lever_pose',  PoseStamped, self.pose_conversion_callback)
+            print("Works1")
+            self.pose_subscriber = rospy.Subscriber('/lever_pose',  PoseStamped, self.pose_conversion_callback)
             self.pose = tuple()
+            print("check")
 
-            #Init publishers
-            # cartesian velocity publislher
-            self.cartesian_velocity_pub = rospy.Publisher('/my_gen3/in/cartesian_velocity', TwistCommand, queue_size=1)
+        #     #Init publishers
+        #     # cartesian velocity publislher
+        #     self.cartesian_velocity_pub = rospy.Publisher('/my_gen3/in/cartesian_velocity', TwistCommand, queue_size=1)
 
 
-            # Init the services
-            clear_faults_full_name = '/' + self.robot_name + '/base/clear_faults'
-            rospy.wait_for_service(clear_faults_full_name)
-            self.clear_faults = rospy.ServiceProxy(clear_faults_full_name, Base_ClearFaults)
+        #     # Init the services
+        #     clear_faults_full_name = '/' + self.robot_name + '/base/clear_faults'
+        #     rospy.wait_for_service(clear_faults_full_name)
+        #     self.clear_faults = rospy.ServiceProxy(clear_faults_full_name, Base_ClearFaults)
 
-            read_action_full_name = '/' + self.robot_name + '/base/read_action'
-            rospy.wait_for_service(read_action_full_name)
-            self.read_action = rospy.ServiceProxy(read_action_full_name, ReadAction)
+        #     read_action_full_name = '/' + self.robot_name + '/base/read_action'
+        #     rospy.wait_for_service(read_action_full_name)
+        #     self.read_action = rospy.ServiceProxy(read_action_full_name, ReadAction)
 
-            execute_action_full_name = '/' + self.robot_name + '/base/execute_action'
-            rospy.wait_for_service(execute_action_full_name)
-            self.execute_action = rospy.ServiceProxy(execute_action_full_name, ExecuteAction)
+        #     execute_action_full_name = '/' + self.robot_name + '/base/execute_action'
+        #     rospy.wait_for_service(execute_action_full_name)
+        #     self.execute_action = rospy.ServiceProxy(execute_action_full_name, ExecuteAction)
 
-            set_cartesian_reference_frame_full_name = '/' + self.robot_name + '/control_config/set_cartesian_reference_frame'
-            rospy.wait_for_service(set_cartesian_reference_frame_full_name)
-            self.set_cartesian_reference_frame = rospy.ServiceProxy(set_cartesian_reference_frame_full_name, SetCartesianReferenceFrame)
+        #     set_cartesian_reference_frame_full_name = '/' + self.robot_name + '/control_config/set_cartesian_reference_frame'
+        #     rospy.wait_for_service(set_cartesian_reference_frame_full_name)
+        #     self.set_cartesian_reference_frame = rospy.ServiceProxy(set_cartesian_reference_frame_full_name, SetCartesianReferenceFrame)
 
-            send_gripper_command_full_name = '/' + self.robot_name + '/base/send_gripper_command'
-            rospy.wait_for_service(send_gripper_command_full_name)
-            self.send_gripper_command = rospy.ServiceProxy(send_gripper_command_full_name, SendGripperCommand)
+        #     send_gripper_command_full_name = '/' + self.robot_name + '/base/send_gripper_command'
+        #     rospy.wait_for_service(send_gripper_command_full_name)
+        #     self.send_gripper_command = rospy.ServiceProxy(send_gripper_command_full_name, SendGripperCommand)
 
-            activate_publishing_of_action_notification_full_name = '/' + self.robot_name + '/base/activate_publishing_of_action_topic'
-            rospy.wait_for_service(activate_publishing_of_action_notification_full_name)
-            self.activate_publishing_of_action_notification = rospy.ServiceProxy(activate_publishing_of_action_notification_full_name, OnNotificationActionTopic)
+        #     activate_publishing_of_action_notification_full_name = '/' + self.robot_name + '/base/activate_publishing_of_action_topic'
+        #     rospy.wait_for_service(activate_publishing_of_action_notification_full_name)
+        #     self.activate_publishing_of_action_notification = rospy.ServiceProxy(activate_publishing_of_action_notification_full_name, OnNotificationActionTopic)
         except:
             self.is_init_success = False
         else:
             self.is_init_success = True
 
 
-    def pose_conversion_callback(self, pose_msg):
-        self.pose = self.get_kinovapose_from_pose_stamped(pose_msg)
+    def pose_conversion_callback(self,pose_msg):
+        print(pose_msg)
+        self.pose = self.get_kinovapose_from_pose_stamped(pose_msg)  
+        print(self.pose)
 
-    def get_kinovapose_from_pose_stamped(pose: PoseStamped):
+    def get_kinovapose_from_pose_stamped(self,pose: PoseStamped):
         '''
         Converts a PoseStamped message to a KinovaPose.
 
@@ -117,7 +122,7 @@ class DoorOpening:
         theta_y_deg = math.degrees(euler[1])
         theta_z_deg = math.degrees(euler[2])
 
-        return tuple(pose.pose.position.x, pose.pose.position.y, pose.pose.position.z, theta_x_deg, theta_y_deg, theta_z_deg)
+        return tuple((pose.pose.position.x, pose.pose.position.y, pose.pose.position.z, theta_x_deg, theta_y_deg, theta_z_deg))
 
 
     def _force_callback(self, msg):
@@ -395,47 +400,50 @@ class DoorOpening:
 
         if success:
 
-            #*******************************************************************************
-            # Make sure to clear the robot's faults else it won't move if it's already in fault
-            success &= self.example_clear_faults()
-            #*******************************************************************************
+            # #*******************************************************************************
+            # # Make sure to clear the robot's faults else it won't move if it's already in fault
+            # success &= self.example_clear_faults()
+            # #*******************************************************************************
             
-            #*******************************************************************************
-            # Set the reference frame to "Mixed"
-            # success &= self.example_set_cartesian_reference_frame()
+            # #*******************************************************************************
+            # # Set the reference frame to "Mixed"
+            # # success &= self.example_set_cartesian_reference_frame()
 
-            #*******************************************************************************
-            # Subscribe to ActionNotification's from the robot to know when a cartesian pose is finished
-            success &= self.example_subscribe_to_a_robot_notification()
+            # #*******************************************************************************
+            # # Subscribe to ActionNotification's from the robot to know when a cartesian pose is finished
+            # success &= self.example_subscribe_to_a_robot_notification()
             
 
-            #*******************************************************************************
+            # #*******************************************************************************
 
-            success &=self.move_to_home_pose(self)
-            # handel_pose=self.get_co_ordinate(self)
-            # success &=self.move_to_cartesian_pose(handel_pose,1.5,15)
+            # # success &=self.move_to_home_pose(self)
+            # # handel_pose=self.get_co_ordinate(self)
+            # # success &=self.move_to_cartesian_pose(handel_pose,1.5,15)
 
-            # moving_time =  10
-            # initial_time = time.now()
-            # current_elapsed_time = time.now()
+            # # moving_time =  10
+            # # initial_time = time.now()
+            # # current_elapsed_time = time.now()
 
-            # self.move_with_velocity(distance = 0.5,moving_time = moving_time,direction="z")
-            # while(current_elapsed_time < moving_time):
-            #     current_elapsed_time = time.now() - initial_time
-            #     if self.door_configuration =="pull":
-            #         self.stop_velocity()
-            #         break
+            # # self.move_with_velocity(distance = 0.5,moving_time = moving_time,direction="z")
+            # # while(current_elapsed_time < moving_time):
+            # #     current_elapsed_time = time.now() - initial_time
+            # #     if self.door_configuration =="pull":
+            # #         self.stop_velocity()
+            # #         break
 
-            # self.stop_velocity()
+            # # self.stop_velocity()
 
             print(self.pose)
 
-            # if self.door_configuration =="pull":
-            # success &=self.move_with_velocity(0.5, 10, "z", velocity=None, ref_frame=CartesianReferenceFrame.CARTESIAN_REFERENCE_FRAME_TOOL)
+           
+        
 
-            success &= self.all_notifs_succeeded
+            # # if self.door_configuration =="pull":
+            # # success &=self.move_with_velocity(0.5, 10, "z", velocity=None, ref_frame=CartesianReferenceFrame.CARTESIAN_REFERENCE_FRAME_TOOL)
 
-            success &= self.all_notifs_succeeded
+            # success &= self.all_notifs_succeeded
+
+            # success &= self.all_notifs_succeeded
 
 
         # For testing purposes
@@ -446,4 +454,8 @@ class DoorOpening:
 
 if __name__ == "__main__":
     ex = DoorOpening()
-    ex.main()
+    rate = rospy.Rate(10)  # 10 Hz
+    
+    while not rospy.is_shutdown():
+        ex.main()
+        rate.sleep()

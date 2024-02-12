@@ -1,1 +1,7 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/gennodejs/ros/kortex_driver/_index.js
+
+"use strict";
+
+module.exports = {
+  msg: require('./msg/_index.js'),
+  srv: require('./srv/_index.js')
+};

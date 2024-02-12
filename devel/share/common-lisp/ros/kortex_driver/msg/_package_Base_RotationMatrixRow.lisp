@@ -1,1 +1,8 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_Base_RotationMatrixRow.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(COLUMN1-VAL
+          COLUMN1
+          COLUMN2-VAL
+          COLUMN2
+          COLUMN3-VAL
+          COLUMN3
+))

@@ -1,1 +1,8 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_ToolConfiguration.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(TOOL_TRANSFORM-VAL
+          TOOL_TRANSFORM
+          TOOL_MASS-VAL
+          TOOL_MASS
+          TOOL_MASS_CENTER-VAL
+          TOOL_MASS_CENTER
+))

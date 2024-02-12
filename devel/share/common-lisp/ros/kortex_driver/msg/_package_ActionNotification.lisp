@@ -1,1 +1,16 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_ActionNotification.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(ACTION_EVENT-VAL
+          ACTION_EVENT
+          HANDLE-VAL
+          HANDLE
+          TIMESTAMP-VAL
+          TIMESTAMP
+          USER_HANDLE-VAL
+          USER_HANDLE
+          ABORT_DETAILS-VAL
+          ABORT_DETAILS
+          CONNECTION-VAL
+          CONNECTION
+          TRAJECTORY_INFO-VAL
+          TRAJECTORY_INFO
+))

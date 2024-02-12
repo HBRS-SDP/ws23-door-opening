@@ -1,1 +1,8 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_description/lib/pkgconfig/kortex_description.pc
+prefix=/home/maira/catkin_ws/ws23-door-opening/devel
+
+Name: kortex_description
+Description: Description of kortex_description
+Version: 2.2.2
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

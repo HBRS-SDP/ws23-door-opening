@@ -1,1 +1,4 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_InterconnectCyclic_Feedback_tool_feedback.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(GRIPPER_FEEDBACK-VAL
+          GRIPPER_FEEDBACK
+))

@@ -1,1 +1,6 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_RFConfiguration.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(WIFI_ENABLE_STATE-VAL
+          WIFI_ENABLE_STATE
+          BLUETOOTH_ENABLE_STATE-VAL
+          BLUETOOTH_ENABLE_STATE
+))

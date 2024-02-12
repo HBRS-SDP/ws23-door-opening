@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/maira/catkin_ws/ws23-door-opening/devel/setup.sh

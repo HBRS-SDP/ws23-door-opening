@@ -1,1 +1,8 @@
-/home/oviya/ws23-door-opening/devel/.private/gazebo_grasp_plugin/lib/pkgconfig/gazebo_grasp_plugin.pc
+prefix=/home/maira/catkin_ws/ws23-door-opening/devel
+
+Name: gazebo_grasp_plugin
+Description: Description of gazebo_grasp_plugin
+Version: 1.0.2
+Cflags: -I/home/maira/catkin_ws/ws23-door-opening/src/ros_kortex/third_party/gazebo-pkgs/gazebo_grasp_plugin/include
+Libs: -L${prefix}/lib -lgazebo_grasp_fix
+Requires: gazebo_ros geometry_msgs roscpp std_msgs gazebo_version_helpers

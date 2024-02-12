@@ -1,1 +1,6 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_FirmwareBundleVersions.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(MAIN_BUNDLE_VERSION-VAL
+          MAIN_BUNDLE_VERSION
+          COMPONENTS_VERSIONS-VAL
+          COMPONENTS_VERSIONS
+))

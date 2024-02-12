@@ -1,1 +1,8 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_PositionCommand.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(POSITION-VAL
+          POSITION
+          VELOCITY-VAL
+          VELOCITY
+          ACCELERATION-VAL
+          ACCELERATION
+))

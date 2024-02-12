@@ -1,1 +1,6 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_SequenceTasksConfiguration.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(SEQUENCE_TASK_HANDLE-VAL
+          SEQUENCE_TASK_HANDLE
+          SEQUENCE_TASKS-VAL
+          SEQUENCE_TASKS
+))

@@ -1,1 +1,6 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_Timestamp.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(SEC-VAL
+          SEC
+          USEC-VAL
+          USEC
+))

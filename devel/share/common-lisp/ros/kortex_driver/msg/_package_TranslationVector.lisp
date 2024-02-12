@@ -1,1 +1,8 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_TranslationVector.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(T_X-VAL
+          T_X
+          T_Y-VAL
+          T_Y
+          T_Z-VAL
+          T_Z
+))

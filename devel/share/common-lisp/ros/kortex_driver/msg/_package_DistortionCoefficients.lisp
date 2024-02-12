@@ -1,1 +1,12 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_DistortionCoefficients.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(K1-VAL
+          K1
+          K2-VAL
+          K2
+          K3-VAL
+          K3
+          P1-VAL
+          P1
+          P2-VAL
+          P2
+))

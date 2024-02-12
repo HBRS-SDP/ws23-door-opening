@@ -1,1 +1,8 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_GripperCyclic_CustomData.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(CUSTOM_DATA_ID-VAL
+          CUSTOM_DATA_ID
+          GRIPPER_CUSTOM_DATA-VAL
+          GRIPPER_CUSTOM_DATA
+          MOTOR_CUSTOM_DATA-VAL
+          MOTOR_CUSTOM_DATA
+))

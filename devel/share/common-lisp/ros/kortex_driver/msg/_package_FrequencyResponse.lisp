@@ -1,1 +1,12 @@
-/home/oviya/ws23-door-opening/devel/.private/kortex_driver/share/common-lisp/ros/kortex_driver/msg/_package_FrequencyResponse.lisp
+(cl:in-package kortex_driver-msg)
+(cl:export '(LOOP_SELECTION-VAL
+          LOOP_SELECTION
+          MIN_FREQUENCY-VAL
+          MIN_FREQUENCY
+          MAX_FREQUENCY-VAL
+          MAX_FREQUENCY
+          AMPLITUDE-VAL
+          AMPLITUDE
+          DURATION-VAL
+          DURATION
+))
