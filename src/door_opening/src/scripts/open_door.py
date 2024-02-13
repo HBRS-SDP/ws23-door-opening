@@ -11,6 +11,13 @@
 #
 ###
 
+"""
+Door opening using Kinova arm Gen3 attached to a Kelo Robotics base.
+Due to a problem with a wheel of the base,
+tasks will be reduced to opening and closing the door without
+base movement tasks such as: approaching and crossing the door.
+"""
+
 import sys
 import rospy
 import time
